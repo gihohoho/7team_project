@@ -4,6 +4,5 @@ from . import views
 
 urlpatterns = [
     path('bucket/', views.bucket),
-    path('mypage/', views.mypage),
-    
+    path('mypage/', views.mypage),  
 ]
