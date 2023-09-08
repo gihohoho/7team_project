@@ -5,3 +5,4 @@ def bucket(request):
 
 def mypage(request):
     pass
+
