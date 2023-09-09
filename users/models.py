@@ -54,6 +54,9 @@ class User(AbstractBaseUser):
         auto_now_add=True, verbose_name='date joined')
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
+    mbti = models.CharField(max_length=4, null=True, blank=True)
+    tmi = models.TextField(null=True, blank=True)
+    blog = models.EmailField(unique=True, null=True, blank=True)
 
     objects = MyUserManager()
 
