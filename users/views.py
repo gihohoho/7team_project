@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
-
+from django.contrib.auth import authenticate, login as auth_login
 from users.models import User
 
 
@@ -19,7 +19,19 @@ def signup(request):
 
 
 def login(request):
-    pass
+    if request.method == 'GET':
+        return render(request, 'login.html')
+    elif request.method == 'POST':
+        email = request.POST['email']
+        password = request.POST['password']
+        user = authenticate(request, email=email, password=password)
+        if user is not None:
+            auth_login(request, user)
+            return HttpResponse('로그인성공')
+        else:
+            return HttpResponse('Invalid auth', status=401)
+    else:
+        return HttpResponse('Invalid request method', status=405)
 
 
 def logout(request):
