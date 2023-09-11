@@ -43,7 +43,20 @@ def create(request):
             content=request.POST["content"],
             user=request.user,
         )
-    return redirect("/bucket/")
+        return redirect("/bucket/mypage/")
+    
+
+# 프로필 수정
+@login_required(login_url='/users/login/')
+@csrf_exempt
+def profile(request):
+    if request.method == "GET":
+        buckets = Bucket.objects.all()
+        buckets_list = buckets.filter(user_id=request.user.id)
+        context = {
+            "buckets_list": buckets_list,
+        }
+        return render(request, "bucket/profile.html", context)       
 
 
 # 개인 게시물 페이지
@@ -76,6 +89,9 @@ def comments_create(request, bucket_id):
 # 댓글삭제
 @csrf_exempt
 def comments_delete(request, bucket_id, comment_id):
-    comment = Comment.objects.get(id=comment_id)
-    comment.delete()
-    return redirect(f'/bucket/{bucket_id}/')
+    if request.method == "POST":
+        comment = Comment.objects.get(id=comment_id)
+        comment.delete()
+        return redirect(f'/bucket/{bucket_id}/')
+    else:
+        return HttpResponse('Invalid request method', status=405)
