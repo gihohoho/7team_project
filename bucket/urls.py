@@ -3,7 +3,6 @@ from . import views
 
 urlpatterns = [
     path('', views.bucket),
-    path('bucket/', views.bucket),
     path('mypage/', views.mypage),
     path('create/', views.create),
     path('<int:bucket_id>/comments_create/', views.comments_create),
