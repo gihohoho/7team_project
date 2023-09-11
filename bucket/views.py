@@ -13,7 +13,7 @@ def bucket(request):
         users = User.objects.all()
         context = {
             "buckets": buckets,
-            "users": users
+            "users": users,
         }
         return render(request, "bucket/bucket.html", context)
 
@@ -60,17 +60,20 @@ def detail(request, bucket_id):
 # 댓글생성
 @login_required(login_url='/users/login/')
 @csrf_exempt
-def comments_create(request, bucket_id):
-    print(request.method)
-    if request.method == "GET":
-        return render(request, "bucket/create.html")
-    elif request.method == "POST":
-        Comment.objects.create(
-            content=request.POST["content"],
-            user=request.user,
-            bucket_id=bucket_id
-        )
-        return redirect(f'/bucket/{bucket_id}/')
+def comments_create(request, bucket_id, comment_id):
+    if request.method == "POST":
+        comment = Comment.objects.get(id=comment_id)
+        if request.user == comment.user:
+            Comment.objects.create(
+                content=request.POST["content"],
+                user=request.user,
+                bucket_id=bucket_id
+            )
+            return redirect(f'/bucket/{bucket_id}/')
+        else:
+            return HttpResponse('not allowed to delete', status=403)
+    else:
+        return HttpResponse('Invalid request method', status=405)
 
 
 # 댓글삭제

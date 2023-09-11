@@ -20,7 +20,7 @@
         {% for comment in comments %}
 
                 <li>{{ comment.content }}</li>
-                <form action="/bucket/comments_delete/{{bucket.id}}/{{comment.id}}" method="post">
+                <form action="/bucket/comments_delete/{{bucket.id}}/{{comment.id}}/" method="post">
                     {% csrf_token %}
                     <button type='submit'> 댓글삭제 </button>
                 </form>
@@ -30,7 +30,7 @@
         {% endfor %}
     </div>
     <div>
-        <form action='/bucket/comments_create/{{bucket.id}}/' method='post'>
+        <form action='/bucket/comments_create/{{bucket.id}}/{{comment.id}}/' method='post'></form>
             {% csrf_token %}
             <input type='text' name='content' placeholder='댓글을 입력해주세요'>
             <button type='submit'> 댓글달기 </button>
