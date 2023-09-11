@@ -4,9 +4,8 @@ from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
 from bucket.models import Bucket, Comment
 
+
 # 메인페이지
-
-
 def bucket(request):
     if request.method == "GET":
         buckets = Bucket.objects.all()
@@ -15,9 +14,8 @@ def bucket(request):
         }
         return render(request, "bucket/bucket.html", context)
 
+
 # 개인페이지
-
-
 @login_required(login_url='/users/login/')
 @csrf_exempt
 def mypage(request):
@@ -29,9 +27,8 @@ def mypage(request):
         }
         return render(request, "bucket/mypage.html", context)
 
+
 # 새로만들기
-
-
 @login_required(login_url='/users/login/')
 @csrf_exempt
 def create(request):
@@ -45,9 +42,8 @@ def create(request):
         )
     return redirect("/bucket/")
 
+
 # 개인 게시물 페이지
-
-
 def detail(request, bucket_id):
     bucket = Bucket.objects.get(id=bucket_id)
     context = {
@@ -70,9 +66,8 @@ def comments_create(request, bucket_id):
     else:
         return HttpResponse('Invalid request method', status=405)
 
+
 # 댓글삭제
-
-
 @csrf_exempt
 def comments_delete(request, bucket_id):
     if request.method == "POST":
