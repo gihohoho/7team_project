@@ -5,6 +5,7 @@ urlpatterns = [
     path('', views.bucket),
     path('mypage/', views.mypage),
     path('create/', views.create),
+    path('<int:bucket_id>/', views.detail),
     path('<int:bucket_id>/comments_create/', views.comments_create),
     path('<int:bucket_id>/comments_delete/', views.comments_delete),
 ]

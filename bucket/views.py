@@ -19,14 +19,14 @@ def bucket(request):
 def mypage(request):
     if request.method == "GET":
         buckets = Bucket.objects.all()
-        buckets_list = buckets.filter(user_id=request.users.id)
+        buckets_list = buckets.filter(user_id=request.user.id)
         context = {
             "buckets_list":buckets_list,
         }
         return render(request, "bucket/mypage.html", context)
     
 # 새로만들기
-@login_required(login_url='/user/login/')
+@login_required(login_url='/users/login/')
 @csrf_exempt    
 def create(request):
     if request.method == "GET":
@@ -39,16 +39,31 @@ def create(request):
         )
     return redirect("/bucket/")
 
+# 개인 게시물 페이지
+def detail(request, bucket_id):
+    bucket = Bucket.objects.get(id=bucket_id)
+    context = {
+        'bucket': bucket,
+    }
+    return render(request, "bucket/detail.html", context)
+
+
 # 댓글생성
 @login_required(login_url='/users/login/')    
 @csrf_exempt
 def comments_create(request, bucket_id):
     if request.method == "POST":
-        bucket = Bucket.objects.get(id=bucket_id)
-        pass
+        Bucket.objects.create(
+            content = request.POST["content"],
+            user = request.user,
+        )
+        return redirect(f'{bucket_id}')
     elif request.method == "GET":
         bucket = Bucket.objects.get(id=bucket_id)
-        pass
+        context = {
+            'bucket': bucket,
+        }
+        return render(request, "bucket/detail.html", context)
     else:
         return HttpResponse('Invalid request method', status=405)
 
