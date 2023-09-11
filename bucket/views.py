@@ -62,7 +62,7 @@ def profile(request):
 # 개인 게시물 페이지
 def detail(request, bucket_id):
     bucket = Bucket.objects.get(id=bucket_id)
-    comments = Comment.objects.all()
+    comments = bucket.comment_set.all()
     context = {
         'bucket': bucket,
         'comments': comments,
