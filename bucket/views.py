@@ -43,7 +43,20 @@ def create(request):
             content=request.POST["content"],
             user=request.user,
         )
-    return redirect("/bucket/")
+        return redirect("/bucket/mypage/")
+    
+
+# 프로필 수정
+@login_required(login_url='/users/login/')
+@csrf_exempt
+def profile(request):
+    if request.method == "GET":
+        buckets = Bucket.objects.all()
+        buckets_list = buckets.filter(user_id=request.user.id)
+        context = {
+            "buckets_list": buckets_list,
+        }
+        return render(request, "bucket/profile.html", context)       
 
 
 # 개인 게시물 페이지
