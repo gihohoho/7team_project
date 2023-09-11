@@ -14,12 +14,12 @@ def bucket(request):
         return render(request, "bucket.html", context)
 
 # 개인페이지
-@login_required(login_url='/user/login/')    
+@login_required(login_url='/users/login/')    
 @csrf_exempt 
 def mypage(request):
     if request.method == "GET":
         buckets = Bucket.objects.all()
-        buckets_list = buckets.filter(user_id=request.user.id)
+        buckets_list = buckets.filter(user_id=request.users.id)
         context = {
             "buckets_list":buckets_list,
         }
