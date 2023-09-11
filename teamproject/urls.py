@@ -16,8 +16,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
+from bucket import views
 
 urlpatterns = [
+    path('', views.bucket),
     path('admin/', admin.site.urls),
     path('users/', include('users.urls')),
+    path('bucket/', include('bucket.urls')),
 ]
