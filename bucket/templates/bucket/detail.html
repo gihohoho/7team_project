@@ -18,11 +18,13 @@
     </div>
     <div>
         {% for comment in comments %}
+
                 <li>{{ comment.content }}</li>
-                <form action="/bucket/comments_delete/{{bucket.id}}/" method="post">
+                <form action="/bucket/comments_delete/{{bucket.id}}/{{comment.id}}" method="post">
                     {% csrf_token %}
                     <button type='submit'> 댓글삭제 </button>
                 </form>
+
         {% empty %}
             <p>아직 댓글이 없습니다.</p>
         {% endfor %}
