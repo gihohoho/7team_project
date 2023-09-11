@@ -3,14 +3,17 @@ from django.shortcuts import redirect, render
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
 from bucket.models import Bucket, Comment
+from users.models import User
 
 
 # 메인페이지
 def bucket(request):
     if request.method == "GET":
         buckets = Bucket.objects.all()
+        users = User.objects.all()
         context = {
             "buckets": buckets,
+            "users" : users
         }
         return render(request, "bucket/bucket.html", context)
 
