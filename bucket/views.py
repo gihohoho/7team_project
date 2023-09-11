@@ -13,7 +13,7 @@ def bucket(request):
         users = User.objects.all()
         context = {
             "buckets": buckets,
-            "users" : users
+            "users": users
         }
         return render(request, "bucket/bucket.html", context)
 
