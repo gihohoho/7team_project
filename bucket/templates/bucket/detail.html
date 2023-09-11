@@ -30,7 +30,7 @@
         {% endfor %}
     </div>
     <div>
-        <form action='/bucket/comments_create/{{bucket.id}}/{{comment.id}}/' method='post'></form>
+        <form action='/bucket/comments_create/{{bucket.id}}/' method='post'>
             {% csrf_token %}
             <input type='text' name='content' placeholder='댓글을 입력해주세요'>
             <button type='submit'> 댓글달기 </button>

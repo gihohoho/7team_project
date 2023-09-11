@@ -44,7 +44,7 @@ def create(request):
             user=request.user,
         )
         return redirect("/bucket/mypage/")
-    
+
 
 # 프로필 수정
 @login_required(login_url='/users/login/')
@@ -56,7 +56,7 @@ def profile(request):
         context = {
             "buckets_list": buckets_list,
         }
-        return render(request, "bucket/profile.html", context)       
+        return render(request, "bucket/profile.html", context)
 
 
 # 개인 게시물 페이지
@@ -73,18 +73,14 @@ def detail(request, bucket_id):
 # 댓글생성
 @login_required(login_url='/users/login/')
 @csrf_exempt
-def comments_create(request, bucket_id, comment_id):
+def comments_create(request, bucket_id):
     if request.method == "POST":
-        comment = Comment.objects.get(id=comment_id)
-        if request.user == comment.user:
-            Comment.objects.create(
-                content=request.POST["content"],
-                user=request.user,
-                bucket_id=bucket_id
-            )
-            return redirect(f'/bucket/{bucket_id}/')
-        else:
-            return HttpResponse('not allowed to delete', status=403)
+        Comment.objects.create(
+            content=request.POST["content"],
+            user=request.user,
+            bucket_id=bucket_id
+        )
+        return redirect(f'/bucket/{bucket_id}/')
     else:
         return HttpResponse('Invalid request method', status=405)
 
