@@ -2,44 +2,52 @@ from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
-from bucket.models import Bucket
+from bucket.models import Bucket, Comment
 
 # 메인페이지
+
+
 def bucket(request):
     if request.method == "GET":
         buckets = Bucket.objects.all()
-        context ={
-            "buckets":buckets,
+        context = {
+            "buckets": buckets,
         }
         return render(request, "bucket/bucket.html", context)
 
 # 개인페이지
-@login_required(login_url='/users/login/')    
-@csrf_exempt 
+
+
+@login_required(login_url='/users/login/')
+@csrf_exempt
 def mypage(request):
     if request.method == "GET":
         buckets = Bucket.objects.all()
         buckets_list = buckets.filter(user_id=request.user.id)
         context = {
-            "buckets_list":buckets_list,
+            "buckets_list": buckets_list,
         }
         return render(request, "bucket/mypage.html", context)
-    
+
 # 새로만들기
+
+
 @login_required(login_url='/users/login/')
-@csrf_exempt    
+@csrf_exempt
 def create(request):
     if request.method == "GET":
-       return render(request, "bucket/create.html")
+        return render(request, "bucket/create.html")
     elif request.method == "POST":
         Bucket.objects.create(
-            title = request.POST["title"],
-            content = request.POST["content"],
-            user = request.user,
+            title=request.POST["title"],
+            content=request.POST["content"],
+            user=request.user,
         )
     return redirect("/bucket/")
 
 # 개인 게시물 페이지
+
+
 def detail(request, bucket_id):
     bucket = Bucket.objects.get(id=bucket_id)
     context = {
@@ -49,16 +57,11 @@ def detail(request, bucket_id):
 
 
 # 댓글생성
-@login_required(login_url='/users/login/')    
+@login_required(login_url='/users/login/')
 @csrf_exempt
 def comments_create(request, bucket_id):
+    print(request.method)
     if request.method == "POST":
-        Bucket.objects.create(
-            content = request.POST["content"],
-            user = request.user,
-        )
-        return redirect(f'{bucket_id}')
-    elif request.method == "GET":
         bucket = Bucket.objects.get(id=bucket_id)
         context = {
             'bucket': bucket,
@@ -68,12 +71,11 @@ def comments_create(request, bucket_id):
         return HttpResponse('Invalid request method', status=405)
 
 # 댓글삭제
+
+
 @csrf_exempt
 def comments_delete(request, bucket_id):
     if request.method == "POST":
-        bucket = Bucket.objects.get(id=bucket_id)
-        pass
-    elif request.method == "GET":
         bucket = Bucket.objects.get(id=bucket_id)
         pass
     else:
