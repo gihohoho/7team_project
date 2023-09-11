@@ -13,7 +13,7 @@ def bucket(request):
         users = User.objects.all()
         context = {
             "buckets": buckets,
-            "users" : users
+            "users": users
         }
         return render(request, "bucket/bucket.html", context)
 
@@ -76,6 +76,9 @@ def comments_create(request, bucket_id):
 # 댓글삭제
 @csrf_exempt
 def comments_delete(request, bucket_id, comment_id):
-    comment = Comment.objects.get(id=comment_id)
-    comment.delete()
-    return redirect(f'/bucket/{bucket_id}/')
+    if request.method == "POST":
+        comment = Comment.objects.get(id=comment_id)
+        comment.delete()
+        return redirect(f'/bucket/{bucket_id}/')
+    else:
+        return HttpResponse('Invalid request method', status=405)
