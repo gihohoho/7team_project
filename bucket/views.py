@@ -49,8 +49,10 @@ def create(request):
 # 개인 게시물 페이지
 def detail(request, bucket_id):
     bucket = Bucket.objects.get(id=bucket_id)
+    comments = Comment.objects.all()
     context = {
         'bucket': bucket,
+        'comments': comments,
     }
     return render(request, "bucket/detail.html", context)
 
@@ -60,21 +62,20 @@ def detail(request, bucket_id):
 @csrf_exempt
 def comments_create(request, bucket_id):
     print(request.method)
-    if request.method == "POST":
-        bucket = Bucket.objects.get(id=bucket_id)
-        context = {
-            'bucket': bucket,
-        }
-        return render(request, "bucket/detail.html", context)
-    else:
-        return HttpResponse('Invalid request method', status=405)
+    if request.method == "GET":
+        return render(request, "bucket/create.html")
+    elif request.method == "POST":
+        Comment.objects.create(
+            content=request.POST["content"],
+            user=request.user,
+            bucket_id=bucket_id
+        )
+        return redirect(f'/bucket/{bucket_id}/')
 
 
 # 댓글삭제
 @csrf_exempt
-def comments_delete(request, bucket_id):
-    if request.method == "POST":
-        bucket = Bucket.objects.get(id=bucket_id)
-        pass
-    else:
-        return HttpResponse('Invalid request method', status=405)
+def comments_delete(request, bucket_id, comment_id):
+    comment = Comment.objects.get(id=comment_id)
+    comment.delete()
+    return redirect(f'/bucket/{bucket_id}/')
