@@ -37,6 +37,6 @@ def login(request):
 def logout(request):
     if request.method == 'POST':
         auth_logout(request)
-        return HttpResponse('로그아웃성공')
+        return redirect('/bucket/')
     else:
         return HttpResponse('Invalid request method', status=405)
