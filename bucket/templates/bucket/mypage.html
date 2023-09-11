@@ -12,9 +12,21 @@
             <div class="mypage">
                 <a href="/bucket/profile/">{{user.username}}</a>
                 <p>{{user.email}}</p>
-                <p>{{user.blog}}</p>
-                <p>{{user.mbti}}</p>
-                <p>{{user.tmi}}</p> 
+                {%if user.blog%}
+                    <p>{{user.blog}}</p>
+                {%else%}
+                    <p>입력 전입니다</p>
+                {%endif%}
+                {%if user.mbti%}
+                    <p>{{user.mbti}}</p>
+                {%else%}
+                    <p>입력 전입니다</p>
+                {%endif%}
+                {%if user.tmi%}
+                    <p>{{user.tmi}}</p>
+                {%else%}
+                    <p>입력 전입니다</p>
+                {%endif%}
             </div>
         </div> 
         <div class="text-bg-dark me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
