@@ -16,7 +16,7 @@ def bucket(request):
 # 개인페이지
 @login_required(login_url='/user/login/')    
 @csrf_exempt 
-def mymage(request):
+def mypage(request):
     if request.method == "GET":
         buckets = Bucket.objects.all()
         buckets_list = buckets.filter(user_id=request.user.id)
