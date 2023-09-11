@@ -3,24 +3,47 @@
 {% bootstrap_javascript %}
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bucket list</title>
-</head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bucket list</title>  
+    <style>
+      .create{
+        width : 350px;
+        margin : auto;
+      }
 
+      .left{
+        float: left;
+        width : 300px;
+        height : 600px;
+        margin : auto;
+      }
+
+      .right{
+        width : 1300px;
+        margin : auto;
+      }
+
+      .main{
+        margin: 0px auto 0px auto;
+      }
+
+      
+
+    </style>
+</head>
 <body>
   <nav class="navbar navbar-light" style="background-color: #e3f2fd;">
     <div class="container d-flex flex-column flex-md-row justify-content-between">
       <a class="py-2 d-none d-md-inline-block" href="/bucket">Home</a>
       {% if request.user.is_authenticated %}
+      <a class="py-2 d-none d-md-inline-block">{{user.username}}</a>
       <a class="py-2 d-none d-md-inline-block" href="/bucket/create/">새로만들기</a>
       <form action="/users/logout/" method="post">
         {% csrf_token %}
-        <button type="submit" name="logout" class="btn-link">로그아웃</button>
+        <button type="submit" class="btn btn-link">로그아웃</button>
       </form>
-
       {% else %}
       <a class="py-2 d-none d-md-inline-block" href="/users/login/">로그인</a>
       <a class="py-2 d-none d-md-inline-block" href="/users/signup/">회원가입</a>
@@ -30,5 +53,5 @@
   {% block content %}
   {% endblock %}
 </body>
-
 </html>
+
