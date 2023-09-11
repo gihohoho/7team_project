@@ -1,16 +1,16 @@
 {% extends 'base.html' %}
 {% block content %}
-    <h1 class="text-2xl">My Bucket List</h1>
-    <div>
-        <ul>
-            {% for bucket in buckets_list %}
-                <a href="/bucket/{{bucket.id}}">
-                    <li class="p-2 border-b">
-                    <div>{{bucket.title}}</div>
-                    </li>
-                </a>
-            {% endfor %}
-        
-        </ul>
-    </div>
+<h1 class="text-2xl">My Bucket List</h1>
+<div>
+    <ul>
+        {% for bucket in buckets_list %}
+        <a href="/bucket/{{bucket.id}}">
+            <li class="p-2 border-b">
+                <div>{{bucket.title}}</div>
+            </li>
+        </a>
+        {% endfor %}
+
+    </ul>
+</div>
 {% endblock %}
