@@ -11,7 +11,7 @@ def bucket(request):
         context ={
             "buckets":buckets,
         }
-        return render(request, "bucket.html", context)
+        return render(request, "bucket/bucket.html", context)
 
 # 개인페이지
 @login_required(login_url='/user/login/')    
