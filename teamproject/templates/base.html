@@ -1,3 +1,6 @@
+{% load bootstrap4 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -27,19 +30,19 @@
         <li class="nav-item active">
           <a class="nav-link" href="/bucket/bucket/">Home</a>
         </li>
-        {% if request.users.is_authenticated %}
+        {% if request.user.is_authenticated %}
         <li class="nav-item">
           <a class="nav-link" href="/bucket/create">새로만들기</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/users/logout/">로그아웃</a>
+          <a class="nav-link" href="/user/logout/">로그아웃</a>
         </li>
         {% else %}
         <li class="nav-item">
-          <a class="nav-link disabled" href="/users/login/">로그인</a>
+          <a class="nav-link disabled" href="/user/login/">로그인</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link disabled" href="/users/signup/">회원가입</a>
+          <a class="nav-link disabled" href="/user/signup/">회원가입</a>
         </li>
         {%endif%}
       </ul>

@@ -1,5 +1,5 @@
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
 from bucket.models import Bucket
@@ -11,7 +11,7 @@ def bucket(request):
         context ={
             "buckets":buckets,
         }
-        return render(request, "bucket.html", context)
+        return render(request, "bucket/bucket.html", context)
 
 # 개인페이지
 @login_required(login_url='/users/login/')    
@@ -23,7 +23,21 @@ def mypage(request):
         context = {
             "buckets_list":buckets_list,
         }
-        return render(request, "mypage.html", context)
+        return render(request, "bucket/mypage.html", context)
+    
+# 새로만들기
+@login_required(login_url='/user/login/')
+@csrf_exempt    
+def create(request):
+    if request.method == "GET":
+       return render(request, "bucket/create.html")
+    elif request.method == "POST":
+        Bucket.objects.create(
+            title = request.POST["title"],
+            content = request.POST["content"],
+            user = request.user,
+        )
+    return redirect("/bucket/")
 
 # 댓글
 def comments_create(request, bucket_id):
