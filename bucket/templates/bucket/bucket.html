@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1 class="text-2xl">Bucket List</h1>
+<div class="p-4">
+    <a href="/todo/create/" class="m-2">
+        <button class="bg-green-600 p-2 rounded-full text-white flex justify-end">새로 만들기</button>
+    </a>
+    <ul>
+        {% for todo in todos %}
+        <a href="/todo/{{todo.id}}">
+            <li class="p-2 border-b">
+                <div>{{todo.content}}</div>
+            </li>
+        </a>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}
