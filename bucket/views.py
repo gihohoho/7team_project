@@ -23,7 +23,7 @@ def mypage(request):
         context = {
             "buckets_list":buckets_list,
         }
-        return render(request, "mypage.html", context)
+        return render(request, "bucket/mypage.html", context)
 
 # 댓글
 def comments_create(request, bucket_id):
