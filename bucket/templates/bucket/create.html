@@ -1,16 +1,18 @@
 {% extends 'base.html' %}
 {% block content %}
     <div class="text-center mb-4">
-    <img class="mb-5 p-4" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR69NqHZ5iSU6hstqlhMGcigGhmdmDTBalgpg&usqp=CAU" alt="" width="400" height="250">
-    <div class="create">    
-        <div class="form-label-group">
-            <input type="text" class="form-control" placeholder="제목을 입력하세요">
+        <img class="mb-5 p-4" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR69NqHZ5iSU6hstqlhMGcigGhmdmDTBalgpg&usqp=CAU" alt="" width="400" height="250">
+        <div class="create">
+            {%csrf_token%}    
+            <form action="/bucket/create/" method="POST">
+                <div class="form-label-group">
+                    <input type="text" class="form-control" placeholder="제목을 입력하세요" name="title">
+                </div>
+                <div class="form-label-group">
+                    <input type="text" class="form-control input-lg" placeholder="내용을 입력하세요" name="content" style="margin-top:20px">
+                </div>
+                <button class="btn btn-lg btn-primary btn-block" type="submit" name="content" style="margin-top:20px">bucket 저장</button>
+            </form>
         </div>
-        <div class="form-label-group">
-            <input type="text" class="form-control input-lg" placeholder="내용을 입력하세요" style="margin-top:20px">
-        </div>
-        <form action="/bucket/create/" method="POST">
-            <button class="btn btn-lg btn-primary btn-block" type="submit" style="margin-top:20px">bucket 저장</button>
-        </form>
-    </div>
 {% endblock %}
+
