@@ -57,7 +57,7 @@ ROOT_URLCONF = 'teamproject.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR/'team7_project'/'templates'],
+        'DIRS': [BASE_DIR/'teamproject'/'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
