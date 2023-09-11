@@ -1,13 +1,16 @@
 {% extends 'base.html' %}
 {% block content %}
-    <h1 class="text-2xl">Bucket 작성하기</h1>
-    <form action="/bucket/create/" method="POST">
-        {%csrf_token%}
-        title : <input tuype="text" name="title" placeholder="제목을 입력해주세요">
-        content : <input tuype="text" name="content" placeholder="내용을 입력해주세요">
-        <button type=submit>저장</button>
-    </form>
-    <a href="/bucket/mypage/">
-        <button>My Bucket</button>
-    </a>
+    <div class="text-center mb-4">
+    <img class="mb-5 p-4" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR69NqHZ5iSU6hstqlhMGcigGhmdmDTBalgpg&usqp=CAU" alt="" width="400" height="250">
+    <div class="create">    
+        <div class="form-label-group">
+            <input type="text" class="form-control" placeholder="제목을 입력하세요">
+        </div>
+        <div class="form-label-group">
+            <input type="text" class="form-control input-lg" placeholder="내용을 입력하세요" style="margin-top:20px">
+        </div>
+        <form action="/bucket/create/" method="POST">
+            <button class="btn btn-lg btn-primary btn-block" type="submit" style="margin-top:20px">bucket 저장</button>
+        </form>
+    </div>
 {% endblock %}
