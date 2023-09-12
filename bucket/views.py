@@ -13,7 +13,7 @@ def bucket(request):
         users = User.objects.all()
         context = {
             "buckets": buckets,
-            "users": users,
+            "users": users, 
         }
         return render(request, "bucket/bucket.html", context)
 
@@ -49,14 +49,12 @@ def create(request):
 # 프로필 수정
 @login_required(login_url='/users/login/')
 @csrf_exempt
-def profile(request):
-    if request.method == "GET":
-        buckets = Bucket.objects.all()
-        buckets_list = buckets.filter(user_id=request.user.id)
-        context = {
-            "buckets_list": buckets_list,
-        }
-        return render(request, "bucket/profile.html", context)
+def profile(request, user_id):
+    user = User.objects.get(id=user_id)
+    context = {
+        'user': user
+    }
+    return render(request, "bucket/profile.html",context)
 
 
 # 개인 게시물 페이지

@@ -2,35 +2,38 @@
 {% block content %}
 <section class="jumbotron text-center">
     <div class="container">
-      <h1 class="jumbotron-heading">My Bucket List</h1>
+        <h1 class="jumbotron-heading">My Bucket List</h1>
     </div>
 </section>
 <div class="main">
     <div class="left">
-        <div class="bg-body-tertiary shadow-sm mx-auto" style="width: 80%; height: 500px; border-radius: 21px 21px 21px 21px;">
-            <img src="https://png.pngtree.com/png-vector/20191113/ourmid/pngtree-personal-personalization-profile-user-line-icon-vector-png-image_1984805.jpg" style="width:200px; margin: 10px 20px;">    
+        <div class="bg-body-tertiary shadow-sm mx-auto"
+            style="width: 80%; height: 500px; border-radius: 21px 21px 21px 21px;">
+            <img src="https://png.pngtree.com/png-vector/20191113/ourmid/pngtree-personal-personalization-profile-user-line-icon-vector-png-image_1984805.jpg"
+                style="width:200px; margin: 10px 20px;">
             <div class="mypage">
-                <a href="/bucket/profile/">{{user.username}}</a>
+                <a href="/bucket/profile/{{user.id}}/">{{user.username}}</a>
                 <p>{{user.email}}</p>
-                {%if user.blog%}
-                    <p>{{user.blog}}</p>
-                {%else%}
-                    <p>입력 전입니다</p>
-                {%endif%}
                 {%if user.mbti%}
-                    <p>{{user.mbti}}</p>
+                <p>MBTI : {{user.mbti}}</p>
                 {%else%}
-                    <p>입력 전입니다</p>
+                <p> MBTI : 입력 전입니다</p>
                 {%endif%}
                 {%if user.tmi%}
-                    <p>{{user.tmi}}</p>
+                <p>TMI : {{user.tmi}}</p>
                 {%else%}
-                    <p>입력 전입니다</p>
+                <p>TMI : 입력 전입니다</p>
+                {%endif%}
+                {%if user.blog%}
+                <p>Blog : {{user.blog}}</p>
+                {%else%}
+                <p>Blog : 입력 전입니다</p>
                 {%endif%}
             </div>
-        </div> 
+        </div>
         <div class="text-bg-dark me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
-            <div class="bg-body-tertiary shadow-sm mx-auto" style="width: 100%; height: 500px; border-radius: 21px 21px 21px 21px;">
+            <div class="bg-body-tertiary shadow-sm mx-auto"
+                style="width: 100%; height: 500px; border-radius: 21px 21px 21px 21px;">
                 <h3 class="display-5">Buket List</h3>
                 <h3 class="display-5">모음</h3>
                 {% for bucket in buckets_list %}
@@ -38,8 +41,8 @@
                     <a href="/bucket/{{bucket.id}}/">{{bucket.title}}</a>
                 </li>
                 {%endfor%}
-            </div> 
-        </div>             
+            </div>
+        </div>
     </div>
     <div class="right">
         <div class="album py-5 bg-light">
@@ -48,19 +51,23 @@
                     {% for bucket in buckets_list %}
                     <div class="col-md-4">
                         <div class="card mb-4 box-shadow">
-                        <img class="card-img-top" data-src="holder.js/100px225?theme=thumb&amp;bg=55595c&amp;fg=eceeef&amp;text=Thumbnail" alt="Thumbnail [100%x225]" src="https://images.newcomernet.com/blogimages/blogimage-637133179061512693.jpg" data-holder-rendered="true" style="height: 225px; width: 100%; display: block;">
-                        <div class="card-body">
-                            <p class="card-text">{{bucket.title}}</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                            <div class="btn-group">
-                                <form action="/bucket/{{bucket.id}}/" method="post">
-                                    {% csrf_token %}
-                                    <button type="submit" class="btn btn-sm btn-outline-secondary">View</button>
-                                </form>
+                            <img class="card-img-top"
+                                data-src="holder.js/100px225?theme=thumb&amp;bg=55595c&amp;fg=eceeef&amp;text=Thumbnail"
+                                alt="Thumbnail [100%x225]"
+                                src="https://images.newcomernet.com/blogimages/blogimage-637133179061512693.jpg"
+                                data-holder-rendered="true" style="height: 225px; width: 100%; display: block;">
+                            <div class="card-body">
+                                <p class="card-text">{{bucket.title}}</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group">
+                                        <form action="/bucket/{{bucket.id}}/" method="post">
+                                            {% csrf_token %}
+                                            <button type="submit" class="btn btn-sm btn-outline-secondary">View</button>
+                                        </form>
+                                    </div>
+                                    <small class="text-muted">{{bucket.created_at}}</small>
+                                </div>
                             </div>
-                            <small class="text-muted">{{bucket.created_at}}</small>
-                            </div>
-                        </div>
                         </div>
                     </div>
                     {% endfor %}
@@ -70,4 +77,3 @@
     </div>
 </div>
 {% endblock %}
-

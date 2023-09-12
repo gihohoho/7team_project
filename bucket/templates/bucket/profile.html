@@ -1,21 +1,27 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="main"> 
+<div class="main">
     <div class="left" style="margin: 90px;">
         <h2 class="display-5" style="margin:auto 70px;">프로필사진</h2>
-        <div class="bg-body-tertiary shadow-sm mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 21px 21px; margin-top:20px;">
-            <img src="https://png.pngtree.com/png-vector/20191113/ourmid/pngtree-personal-personalization-profile-user-line-icon-vector-png-image_1984805.jpg" style="width:200px; margin: 30px 20px;">    
-        </div> 
+        <div class="bg-body-tertiary shadow-sm mx-auto"
+            style="width: 80%; height: 300px; border-radius: 21px 21px 21px 21px; margin-top:20px;">
+            <img src="https://png.pngtree.com/png-vector/20191113/ourmid/pngtree-personal-personalization-profile-user-line-icon-vector-png-image_1984805.jpg"
+                style="width:200px; margin: 30px 20px;">
+        </div>
     </div>
     <div class="right">
-        <div class="bg-body-tertiary me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden" style="width:600px;">
+        <div class="bg-body-tertiary me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden"
+            style="width:600px;">
             <div class="my-3 p-3">
-            <h2 class="display-5">User 정보</h2>
+                <h2 class="display-5">User 정보</h2>
             </div>
             <div class="bg-dark shadow-sm mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;">
                 <div style="color:white;">
-                    <P class="p-3"> id : {{user.username}}</P>
-                    <P> email : {{user.email}}</P>
+                    <P class="p-3"> ID : {{user.username}}</P>
+                    <P> Email : {{user.email}}</P>
+                    <P> MBTI : {{user.mbti}}</P>
+                    <P> TMI : {{user.tmi}}</P>
+                    <P> Blog : {{user.blog}}</P>
                 </div>
             </div>
         </div>
