@@ -13,7 +13,7 @@ def bucket(request):
         users = User.objects.all()
         context = {
             "buckets": buckets,
-            "users": users
+            "users": users,
         }
         return render(request, "bucket/bucket.html", context)
 
@@ -44,7 +44,7 @@ def create(request):
             user=request.user,
         )
         return redirect("/bucket/mypage/")
-    
+
 
 # 프로필 수정
 @login_required(login_url='/users/login/')
@@ -56,13 +56,13 @@ def profile(request):
         context = {
             "buckets_list": buckets_list,
         }
-        return render(request, "bucket/profile.html", context)       
+        return render(request, "bucket/profile.html", context)
 
 
 # 개인 게시물 페이지
 def detail(request, bucket_id):
     bucket = Bucket.objects.get(id=bucket_id)
-    comments = Comment.objects.all()
+    comments = bucket.comment_set.all()
     context = {
         'bucket': bucket,
         'comments': comments,
@@ -74,16 +74,15 @@ def detail(request, bucket_id):
 @login_required(login_url='/users/login/')
 @csrf_exempt
 def comments_create(request, bucket_id):
-    print(request.method)
-    if request.method == "GET":
-        return render(request, "bucket/create.html")
-    elif request.method == "POST":
+    if request.method == "POST":
         Comment.objects.create(
             content=request.POST["content"],
             user=request.user,
             bucket_id=bucket_id
         )
         return redirect(f'/bucket/{bucket_id}/')
+    else:
+        return HttpResponse('Invalid request method', status=405)
 
 
 # 댓글삭제
