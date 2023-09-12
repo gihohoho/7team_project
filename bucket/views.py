@@ -90,7 +90,10 @@ def comments_create(request, bucket_id):
 def comments_delete(request, bucket_id, comment_id):
     if request.method == "POST":
         comment = Comment.objects.get(id=comment_id)
-        comment.delete()
-        return redirect(f'/bucket/{bucket_id}/')
+        if comment.user == request.user:
+            comment.delete()
+            return redirect(f'/bucket/{bucket_id}/')
+        else:
+            return HttpResponse('not allowed to delete', status=403)
     else:
         return HttpResponse('Invalid request method', status=405)
