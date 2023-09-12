@@ -21,7 +21,11 @@
                 style="width: 80%; height: 300px; border-radius: 21px 21px 21px 21px;">
                 {% for name in users %}
                 <li class="p-2">
-                    <a href="/bucket/userbucket/{{name.id}}/">{{name.username}}</a>
+                    {% if name.username == request.user.username%}
+                        <a href="/bucket/mypage/">{{name.username}}</a>
+                    {%else%}
+                        <a href="/bucket/userbucket/{{name.id}}/">{{name.username}}</a>
+                    {%endif%}
                 </li>
                 {%endfor%}
             </div>
