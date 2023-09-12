@@ -1,5 +1,5 @@
 from django.http import HttpResponse
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render, get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
 from bucket.models import Bucket, Comment
@@ -29,6 +29,20 @@ def mypage(request):
             "buckets_list": buckets_list,
         }
         return render(request, "bucket/mypage.html", context)
+    
+
+# 다른 유저 bucket 페이지    
+@csrf_exempt
+def userbucket(request, user_id):
+    if request.method == "GET":
+        user = get_object_or_404(User, id=user_id) 
+        buckets_list = Bucket.objects.filter(user=user)  
+
+        context = {
+            'user': user,
+            "buckets_list": buckets_list,
+        }
+        return render(request, "bucket/userbucket.html", context)
 
 
 # 새로만들기

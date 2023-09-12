@@ -2,26 +2,43 @@
 {% block content %}
 <section class="jumbotron text-center">
     <div class="container">
-        <h1 class="jumbotron-heading">Bucket List</h1>
-        {% if request.user.is_authenticated %}
-        <a href="/bucket/mypage/">
-            My Bucket List
-        </a>
-        {%endif%}
+        <h1 class="jumbotron-heading">My Bucket List</h1>
     </div>
 </section>
 <div class="main">
     <div class="left">
-        <div class="text-bg-dark me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
-            <div class="my-3 py-3">
-                <h2 class="display-5">User</h2>
-                <h2 class="display-5"> Bucket List</h2>
+        <div class="bg-body-tertiary shadow-sm mx-auto"
+            style="width: 80%; height: 500px; border-radius: 21px 21px 21px 21px;">
+            <img src="https://png.pngtree.com/png-vector/20191113/ourmid/pngtree-personal-personalization-profile-user-line-icon-vector-png-image_1984805.jpg"
+                style="width:200px; margin: 10px 20px;">
+            <div class="mypage">
+                <p>{{user.username}}</p>
+                <p>{{user.email}}</p>
+                {%if user.mbti%}
+                <p>MBTI : {{user.mbti}}</p>
+                {%else%}
+                <p> MBTI : 입력 전입니다</p>
+                {%endif%}
+                {%if user.tmi%}
+                <p>TMI : {{user.tmi}}</p>
+                {%else%}
+                <p>TMI : 입력 전입니다</p>
+                {%endif%}
+                {%if user.blog%}
+                <p>Blog : {{user.blog}}</p>
+                {%else%}
+                <p>Blog : 입력 전입니다</p>
+                {%endif%}
             </div>
+        </div>
+        <div class="text-bg-dark me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
             <div class="bg-body-tertiary shadow-sm mx-auto"
-                style="width: 80%; height: 300px; border-radius: 21px 21px 21px 21px;">
-                {% for name in users %}
-                <li class="p-2">
-                    <a href="/bucket/userbucket/{{name.id}}/">{{name.username}}</a>
+                style="width: 100%; height: 500px; border-radius: 21px 21px 21px 21px;">
+                <h3 class="display-5">Buket List</h3>
+                <h3 class="display-5">모음</h3>
+                {% for bucket in buckets_list %}
+                <li>
+                    <a href="/bucket/{{bucket.id}}/">{{bucket.title}}</a>
                 </li>
                 {%endfor%}
             </div>
@@ -31,7 +48,7 @@
         <div class="album py-5 bg-light">
             <div class="container">
                 <div class="row">
-                    {% for bucket in buckets %}
+                    {% for bucket in buckets_list %}
                     <div class="col-md-4">
                         <div class="card mb-4 box-shadow">
                             <img class="card-img-top"
@@ -59,5 +76,4 @@
         </div>
     </div>
 </div>
-
 {% endblock %}
