@@ -1,40 +1,175 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>개인 상세 페이지</title>
-</head>
-<body>
+    <style>
+      body {
+        background-color: #e9ebee;
+      }
+
+      .container {
+        font-family: arial;
+        display: flex;
+        justify-content: center;
+      }
+
+      .be-comment-block {
+        margin-top: 50px !important;
+        margin-bottom: 50px !important;
+        border: 2px solid #edeff2;
+        border-radius: 2px;
+        padding: 50px 70px;
+        border: 2px solid #ffffff;
+      }
+
+      /*프로필사진*/
+      .comments-title {
+        font-size: 18px;
+        color: #262626;
+        margin-bottom: 20px;
+        font-family: "Conv_helveticaneuecyr-bold";
+      }
+      .be-img-comment {
+        width: 60px;
+        height: 60px;
+        float: left;
+        margin-bottom: 15px;
+      }
+      .be-ava-comment {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+      }
+
+      /*comment 박스*/
+      .be-comment-content {
+        margin-left: 80px;
+        width: max(800px);
+        margin-bottom: 15px;
+      }
+      .be-comment-content span {
+        display: inline-block;
+        width: 49%;
+        margin-bottom: 1px;
+      }
+      .be-comment-content a {
+        color: #383b43;
+      }
+
+      /*username(닉네임)*/
+      .be-comment-name {
+        font-size: 17px;
+        font-family: "Conv_helveticaneuecyr-bold";
+      }
+
+      /*생성시간*/
+      .be-comment-time {
+        text-align: right;
+        font-size: 11px;
+        color: #9a9fb1;
+      }
+
+      /*댓글 내용*/
+      .be-comment-text {
+        font-size: 13px;
+        line-height: 18px;
+        color: #585c68;
+        display: block;
+        background: #f6f6f7;
+        border: 1px solid #edeff2;
+        padding: 15px 20px 20px 20px;
+      }
+
+      .form-group .form-input {
+        font-size: 15px;
+        line-height: 30px;
+        font-weight: 400;
+        color: #525458;
+        width: max(900px);
+        height: 50px;
+        margin-top: 20px;
+        margin-bottom: 10px;
+        padding-left: 20px;
+        padding-right: 20px;
+        border: 1px solid #edeff2;
+        border-radius: 3px;
+      }
+
+      .form-group textarea.form-input {
+        height: 100px;
+      }
+
+      .button {
+        text-align: right;
+      }
+    </style>
+  </head>
+  <body>
     <div>개인 상세 페이지 입니다.</div>
 
-    
-    
-
-    <div>----------------------------------------------------------------------</div>
-<!-------------------------------여기부터 댓글----------------------------------->
-    <div>
-    댓글 목록 : 
-    </div>
-    <div>
-        {% for comment in comments %}
-
-                <li>{{ comment.content }}</li>
-                <form action="/bucket/comments_delete/{{bucket.id}}/{{comment.id}}/" method="post">
-                    {% csrf_token %}
-                    <button type='submit'> 댓글삭제 </button>
-                </form>
-
-        {% empty %}
-            <p>아직 댓글이 없습니다.</p>
-        {% endfor %}
-    </div>
-    <div>
-        <form action='/bucket/comments_create/{{bucket.id}}/' method='post'>
+    <!-------------------------------여기부터 댓글----------------------------------->
+    <div class="container">
+      <div class="be-comment-block">
+        <h1 class="comments-title">댓글 목록</h1>
+        <div class="be-comment">
+          {% for comment in comments %}
+          <div class="be-img-comment">
+            <img
+              src="https://bootdey.com/img/Content/avatar/avatar1.png"
+              alt=""
+              class="be-ava-comment"
+            />
+          </div>
+          <div class="be-comment-content">
+            <span class="be-comment-name">
+              <a>{{ user.username }}</a>
+            </span>
+            <span class="be-comment-time">
+              <i class="fa fa-clock-o"></i>
+              {{ comment.updated_at }}
+            </span>
+            <p class="be-comment-text">{{ comment.content }}</p>
+            <div class="button">
+              <form
+                action="/bucket/comments_delete/{{bucket.id}}/{{comment.id}}/"
+                method="post"
+              >
+                {% csrf_token %}
+                <button class="btn btn-primary pull-right" type="submit">
+                  댓글삭제
+                </button>
+              </form>
+            </div>
+          </div>
+          {% empty %}
+          <p>아직 댓글이 없습니다.</p>
+          {% endfor %}
+        </div>
+        <div>
+          <form
+            class="form-block"
+            action="/bucket/comments_create/{{bucket.id}}/"
+            method="post"
+          >
             {% csrf_token %}
-            <input type='text' name='content' placeholder='댓글을 입력해주세요'>
-            <button type='submit'> 댓글달기 </button>
-        </form>
+            <div class="row">
+              <div class="form-group">
+                <textarea
+                  class="form-input"
+                  type="text"
+                  name="content"
+                  placeholder="댓글을 입력해주세요"
+                ></textarea>
+              </div>
+              <button class="btn btn-primary pull-right" type="submit">
+                댓글달기
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
-</body>
+  </body>
 </html>
