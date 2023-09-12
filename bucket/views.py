@@ -50,13 +50,20 @@ def create(request):
 @login_required(login_url='/users/login/')
 @csrf_exempt
 def profile(request, user_id):
-    user = User.objects.get(id=user_id)
-    context = {
-        'user': user
-    }
-    return render(request, "bucket/profile.html",context)
-
-
+    if request.method == "GET":
+        user = User.objects.get(id=user_id)
+        context = {
+            'user': user
+        }
+        return render(request, "bucket/profile.html",context)
+    elif request.method == "POST":
+        user = User.objects.get(id=user_id)
+        user.username = request.POST["username"]
+        user.mbti = request.POST["mbti"].upper()
+        user.tmi = request.POST["tmi"]
+        user.blog = request.POST["blog"]
+        user.save()
+        return redirect(f'/bucket/profile/{user_id}/')
 # 개인 게시물 페이지
 def detail(request, bucket_id):
     bucket = Bucket.objects.get(id=bucket_id)

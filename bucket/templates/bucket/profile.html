@@ -16,13 +16,18 @@
                 <h2 class="display-5">User 정보</h2>
             </div>
             <div class="bg-dark shadow-sm mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;">
-                <div style="color:white;">
-                    <P class="p-3"> ID : {{user.username}}</P>
-                    <P> Email : {{user.email}}</P>
-                    <P> MBTI : {{user.mbti}}</P>
-                    <P> TMI : {{user.tmi}}</P>
-                    <P> Blog : {{user.blog}}</P>
-                </div>
+                {%csrf_token%}
+                <form action="/bucket/profile/{{ user.id }}/" method="post">
+                    <div style="color:white;">
+                        <P class="p-3"> Email : {{user.email}}</P>
+                        <P> ID : <input type="text" name="username" value="{{user.username}}" /></P>
+                        <P> MBTI : <input type="text" name="mbti" value="{{ user.mbti | default:'내용을 입력해주세요' }}" /></P>
+                        <P> TMI : <input type="text" name="tmi" value="{{ user.tmi | default:'내용을 입력해주세요' }}" /></P>
+                        <P> Blog : <input type="email" name="blog" value="{{ user.blog | default:'주소를 입력해주세요'}}" /></P>
+
+                        <button type="submit">회원정보 수정</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
