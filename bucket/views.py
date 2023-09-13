@@ -140,7 +140,6 @@ def comments_delete(request, bucket_id, comment_id):
 # 좋아요
 @login_required(login_url='/users/login/')
 def likes(request, bucket_id):
-    print(request.method)
     bucket = Bucket.objects.get(id=bucket_id)
 
     if request.method == "POST":
