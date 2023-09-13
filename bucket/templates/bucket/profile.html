@@ -2,17 +2,21 @@
 {% block content %}
 <div class="main">
     <div class="left" style="margin: 90px;">
-        <h2 class="display-5" style="margin:auto 70px;">프로필사진</h2>
-        <div class="bg-body-tertiary shadow-sm mx-auto"
-            style="width: 80%; height: 300px; border-radius: 21px 21px 21px 21px; margin-top:20px;">
-            {%if user.image%}
-                <img src="/media/{{user.image}}"
-                    style="width:200px; margin: 30px 20px;"> 
-            {%else%}    
-                <img src="https://png.pngtree.com/png-vector/20191113/ourmid/pngtree-personal-personalization-profile-user-line-icon-vector-png-image_1984805.jpg"
-                style="width:200px; margin: 30px 20px;">
-            {%endif%}  
-        </div>
+        <form action="/bucket/profile_image/{{ user.id }}/" method="post" enctype="multipart/form-data">
+            <h2 class="display-5" style="margin:auto 70px;">프로필사진</h2>
+            <div class="bg-body-tertiary shadow-sm mx-auto"
+                style="width: 80%; height: 400px; border-radius: 21px 21px 21px 21px; margin-top:20px;">
+                {%if user.image%}
+                    <img src="/media/{{user.image}}"
+                        style="width:200px; margin: 30px 20px;"> 
+                {%else%}    
+                    <img src="https://png.pngtree.com/png-vector/20191113/ourmid/pngtree-personal-personalization-profile-user-line-icon-vector-png-image_1984805.jpg"
+                    style="width:200px; margin: 30px 20px;">
+                {%endif%}  
+                <input type="file" name="image"/>
+                <button type="submit">프로필 사진 저장</button>
+            </div>
+        </form>
     </div>
     <div class="right">
         <div class="bg-body-tertiary me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden"
@@ -21,19 +25,17 @@
                 <h2 class="display-5">User 정보</h2>
             </div>
             <div class="bg-dark shadow-sm mx-auto" style="width: 80%; height: 400px; border-radius: 21px 21px 0 0;">
+            <form action="/bucket/profile/{{ user.id }}/" method="post">
                 {%csrf_token%}
-                <form action="/bucket/profile/{{ user.id }}/" method="post" enctype="multipart/form-data">
-                    <div style="color:white;">
-                        <P class="p-3"> Email : {{user.email}}</P>
-                        <P> ID : <input type="text" name="username" value="{{user.username}}" /></P>
-                        <P> MBTI : <input type="text" name="mbti" value="{{ user.mbti | default:'내용을 입력해주세요' }}" /></P>
-                        <P> TMI : <input type="text" name="tmi" value="{{ user.tmi | default:'내용을 입력해주세요' }}" /></P>
-                        <P> Blog : <input type="email" name="blog" value="{{ user.blog | default:'주소를 입력해주세요'}}" /></P>
-                        <input type="file" name="image"/>
-
-                        <button type="submit">회원정보 수정</button>
-                    </div>
-                </form>
+                <div style="color:white;">
+                    <P class="p-3"> Email : {{user.email}}</P>
+                    <P> ID : <input type="text" name="username" value="{{user.username}}" /></P>
+                    <P> MBTI : <input type="text" name="mbti" value="{{ user.mbti | default:'내용을 입력해주세요' }}" /></P>
+                    <P> TMI : <input type="text" name="tmi" value="{{ user.tmi | default:'내용을 입력해주세요' }}" /></P>
+                    <P> Blog : <input type="email" name="blog" value="{{ user.blog | default:'주소를 입력해주세요'}}" /></P>
+                    <button type="submit">회원정보 수정</button>
+                </div>
+            </form>
             </div>
         </div>
     </div>
