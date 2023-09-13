@@ -84,7 +84,7 @@ def profile(request, user_id):
     if request.method == "GET":
         user = User.objects.get(id=user_id)
         context = {
-            'user': user
+            'user': user,
         }
         return render(request, "bucket/profile.html",context)
     elif request.method == "POST":

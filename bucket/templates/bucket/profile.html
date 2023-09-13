@@ -7,13 +7,12 @@
             <div class="bg-body-tertiary shadow-sm mx-auto"
                 style="width: 80%; height: 400px; border-radius: 21px 21px 21px 21px; margin-top:20px;">
                 {%if user.image%}
-                    <img src="/media/{{user.image}}"
-                        style="width:200px; margin: 30px 20px;"> 
-                {%else%}    
-                    <img src="https://png.pngtree.com/png-vector/20191113/ourmid/pngtree-personal-personalization-profile-user-line-icon-vector-png-image_1984805.jpg"
+                <img src="/media/{{user.image}}" style="width:200px; margin: 30px 20px;">
+                {%else%}
+                <img src="https://png.pngtree.com/png-vector/20191113/ourmid/pngtree-personal-personalization-profile-user-line-icon-vector-png-image_1984805.jpg"
                     style="width:200px; margin: 30px 20px;">
-                {%endif%}  
-                <input type="file" name="image"/>
+                {%endif%}
+                <input type="file" name="image" />
                 <button type="submit">프로필 사진 저장</button>
             </div>
         </form>
@@ -25,17 +24,17 @@
                 <h2 class="display-5">User 정보</h2>
             </div>
             <div class="bg-dark shadow-sm mx-auto" style="width: 80%; height: 400px; border-radius: 21px 21px 0 0;">
-            <form action="/bucket/profile/{{ user.id }}/" method="post">
-                {%csrf_token%}
-                <div style="color:white;">
-                    <P class="p-3"> Email : {{user.email}}</P>
-                    <P> ID : <input type="text" name="username" value="{{user.username}}" /></P>
-                    <P> MBTI : <input type="text" name="mbti" value="{{ user.mbti | default:'내용을 입력해주세요' }}" /></P>
-                    <P> TMI : <input type="text" name="tmi" value="{{ user.tmi | default:'내용을 입력해주세요' }}" /></P>
-                    <P> Blog : <input type="email" name="blog" value="{{ user.blog | default:'주소를 입력해주세요'}}" /></P>
-                    <button type="submit">회원정보 수정</button>
-                </div>
-            </form>
+                <form action="/bucket/profile/{{ user.id }}/" method="post">
+                    {%csrf_token%}
+                    <div style="color:white;">
+                        <P class="p-3"> Email : {{user.email}}</P>
+                        <P> ID : <input type="text" name="username" value="{{user.username}}" /></P>
+                        <P> MBTI : <input type="text" name="mbti" value="{{ user.mbti | default:'내용을 입력해주세요' }}" /></P>
+                        <P> TMI : <input type="text" name="tmi" value="{{ user.tmi | default:'내용을 입력해주세요' }}" /></P>
+                        <P> Blog : <input type="text" name="blog" value="{{ user.blog | default:'주소를 입력해주세요'}}" /></P>
+                        <button type="submit">회원정보 수정</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
