@@ -8,11 +8,14 @@
     <div class="be-comment">
       {% for comment in comments %}
       <div class="be-img-comment">
-        <img
-          src="https://bootdey.com/img/Content/avatar/avatar1.png"
-          alt=""
-          class="be-ava-comment"
-        />
+        {%if user.image%}
+            <img src="/media/{{user.image}}"
+                style="width:100px; margin: 0px -30px; border-radius:80%; overflow:hidden;"> 
+        {%else%}    
+            <img src="https://png.pngtree.com/png-vector/20191113/ourmid/pngtree-personal-personalization-profile-user-line-icon-vector-png-image_1984805.jpg"
+            style="width:100px; margin: 0px -30px; border-radius:80%; overflow:hidden;">
+        {%endif%}  
+        
       </div>
       <div class="be-comment-content">
         <span class="be-comment-name">

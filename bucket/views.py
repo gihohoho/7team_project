@@ -60,6 +60,23 @@ def create(request):
         return redirect("/bucket/mypage/")
 
 
+# 프로필 사진 수정
+@login_required(login_url='/users/login/')
+@csrf_exempt
+def profile_image(request, user_id):
+    if request.method == "GET":
+        user = User.objects.get(id=user_id)
+        context = {
+            'user': user
+        }
+        return render(request, "bucket/profile.html",context)
+    elif request.method == "POST":
+        user = User.objects.get(id=user_id)
+        user.image = request.FILES.get("image")
+        user.save()
+        return redirect(f'/bucket/profile/{user_id}/')
+
+
 # 프로필 수정
 @login_required(login_url='/users/login/')
 @csrf_exempt
@@ -76,7 +93,6 @@ def profile(request, user_id):
         user.mbti = request.POST["mbti"].upper()
         user.tmi = request.POST["tmi"]
         user.blog = request.POST["blog"]
-        user.image = request.FILES.get("image")
         user.save()
         return redirect(f'/bucket/profile/{user_id}/')
     
