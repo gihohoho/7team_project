@@ -11,7 +11,9 @@
       <button class="like-button">
         {% post_to_twitter "Twitter" post.get_absolute_url "Twitter" %}
       </button>
-      <button class="like-button">북마크</button>
+      <form action="/bucket/bookmark/{{bucket.id}}/" method="post">
+        <button class="like-button">북마크</button>
+      </form>
     </div>
     <div class="be-like-block">
       <form action="/bucket/likes/{{bucket.id}}/" method="post">

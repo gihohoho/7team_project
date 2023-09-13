@@ -11,5 +11,6 @@ urlpatterns = [
      path('<int:bucket_id>/', views.detail),  # 게시물 1개 보기
      path('comments_create/<int:bucket_id>/', views.comments_create),  # 댓글쓰기
      path('comments_delete/<int:bucket_id>/<int:comment_id>/', views.comments_delete),  # 댓글삭제
-     path('likes/<int:bucket_id>/', views.likes, name='likes'),
+     path('likes/<int:bucket_id>/', views.likes, name='likes'), # 좋아요
+     path('bookmark/<int:bucket_id>/', views.bookmark_create), # 북마크 생성
 ]
