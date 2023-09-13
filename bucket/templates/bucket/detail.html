@@ -4,6 +4,22 @@
 <!-------------------------------여기부터 댓글----------------------------------->
 <div class="comment-container">
   <div class="be-comment-block">
+    <div class="be-like-block" style="float: right">
+      <button type="submit">공유하기</button>
+      <div style="float: right">
+        <button type="submit">북마크</button>
+      </div>
+    </div>
+
+    <div class="be-like-block">
+      <form action="/bucket/likes/{{bucket.id}}/" method="post">
+        {% csrf_token %}
+        <button type="submit">좋아요</button>
+        <span class="small">
+          {{ bucket.like_users.count }} 명이 이 글을 좋아합니다.
+        </span>
+      </form>
+    </div>
     <h1 class="comments-title">댓글 목록</h1>
     <div class="be-comment">
       {% for comment in comments %}
