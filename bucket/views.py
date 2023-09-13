@@ -76,8 +76,11 @@ def profile(request, user_id):
         user.mbti = request.POST["mbti"].upper()
         user.tmi = request.POST["tmi"]
         user.blog = request.POST["blog"]
+        user.image = request.FILES.get("image")
         user.save()
         return redirect(f'/bucket/profile/{user_id}/')
+    
+    
 # 개인 게시물 페이지
 def detail(request, bucket_id):
     bucket = Bucket.objects.get(id=bucket_id)
