@@ -1,184 +1,217 @@
 {% load bootstrap4 %} {% bootstrap_css %} {% bootstrap_javascript %}
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bucket list</title>
+    <style>
+      .create {
+        width: 350px;
+        margin: auto;
+      }
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Bucket list</title>
-  <style>
-    .create {
-      width: 350px;
-      margin: auto;
-    }
+      .left {
+        float: left;
+        width: 300px;
+        height: 600px;
+        margin: auto;
+      }
 
-    .left {
-      float: left;
-      width: 300px;
-      height: 600px;
-      margin: auto;
-    }
+      .right {
+        width: 1300px;
+        margin: auto;
+      }
 
-    .right {
-      width: 1300px;
-      margin: auto;
-    }
+      .main {
+        margin: 0px auto 0px auto;
+      }
 
-    .main {
-      margin: 0px auto 0px auto;
-    }
+      .mypage {
+        text-align: center;
+      }
 
-    .mypage {
-      text-align: center;
-    }
+      /****************** detail.html *******************/
+      .comment-container {
+        font-family: arial;
+        display: flex;
+        justify-content: center;
+        background-color: #e9ebee;
+      }
 
-    /****************** detail.html *******************/
-    .comment-container {
-      font-family: arial;
-      display: flex;
-      justify-content: center;
-      background-color: #e9ebee;
-    }
+      .be-comment-block {
+        margin-top: 50px !important;
+        margin-bottom: 50px !important;
+        border: 2px solid #edeff2;
+        border-radius: 2px;
+        padding: 50px 70px;
+        border: 2px solid #ffffff;
+      }
 
-    .be-comment-block {
-      margin-top: 50px !important;
-      margin-bottom: 50px !important;
-      border: 2px solid #edeff2;
-      border-radius: 2px;
-      padding: 50px 70px;
-      border: 2px solid #ffffff;
-    }
+      /* 좋아요 */
+      .be-like-block {
+        border: none;
+      }
+      .like-button {
+        background-color: #e9ebee;
+        border: none;
+      }
 
-    /*댓글 프로필사진*/
-    .comments-title {
-      font-size: 18px;
-      color: #262626;
-      margin-bottom: 20px;
-      font-family: "Conv_helveticaneuecyr-bold";
-    }
+      /*댓글 프로필사진*/
+      .comments-title {
+        font-size: 18px;
+        color: #262626;
+        margin-bottom: 20px;
+        font-family: "Conv_helveticaneuecyr-bold";
+      }
 
-    .be-img-comment {
-      width: 60px;
-      height: 60px;
-      float: left;
-      margin-bottom: 15px;
-    }
+      .be-img-comment {
+        width: 60px;
+        height: 60px;
+        float: left;
+        margin-bottom: 15px;
+      }
 
-    .be-ava-comment {
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-    }
+      .be-ava-comment {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+      }
 
-    /*댓글 comment 박스*/
-    .be-comment-content {
-      margin-left: 80px;
-      width: max(800px);
-      margin-bottom: 15px;
-    }
+      /*댓글 comment 박스*/
+      .be-comment-content {
+        margin-left: 80px;
+        width: max(800px);
+        margin-bottom: 15px;
+      }
 
-    .be-comment-content span {
-      display: inline-block;
-      width: 49%;
-      margin-bottom: 1px;
-    }
+      .be-comment-content span {
+        display: inline-block;
+        width: 49%;
+        margin-bottom: 1px;
+      }
 
-    .be-comment-content a {
-      color: #383b43;
-    }
+      .be-comment-content a {
+        color: #383b43;
+      }
 
-    /*댓글 username(닉네임)*/
-    .be-comment-name {
-      font-size: 17px;
-      font-family: "Conv_helveticaneuecyr-bold";
-    }
+      /*댓글 username(닉네임)*/
+      .be-comment-name {
+        font-size: 17px;
+        font-family: "Conv_helveticaneuecyr-bold";
+      }
 
-    /*댓글 생성시간*/
-    .be-comment-time {
-      text-align: right;
-      font-size: 11px;
-      color: #9a9fb1;
-    }
+      /*댓글 생성시간*/
+      .be-comment-time {
+        text-align: right;
+        font-size: 11px;
+        color: #9a9fb1;
+      }
 
-    /*댓글 내용*/
-    .be-comment-text {
-      font-size: 13px;
-      line-height: 18px;
-      color: #585c68;
-      display: block;
-      background: #f6f6f7;
-      border: 1px solid #edeff2;
-      padding: 15px 20px 20px 20px;
-    }
+      /*댓글 내용*/
+      .be-comment-text {
+        font-size: 13px;
+        line-height: 18px;
+        color: #585c68;
+        display: block;
+        background: #f6f6f7;
+        border: 1px solid #edeff2;
+        padding: 15px 20px 20px 20px;
+      }
 
-    .form-group .form-input {
-      font-size: 15px;
-      line-height: 30px;
-      font-weight: 400;
-      color: #525458;
-      width: max(900px);
-      height: 50px;
-      margin-top: 20px;
-      margin-bottom: 10px;
-      padding-left: 20px;
-      padding-right: 20px;
-      border: 1px solid #edeff2;
-      border-radius: 3px;
-    }
+      .form-group .form-input {
+        font-size: 15px;
+        line-height: 30px;
+        font-weight: 400;
+        color: #525458;
+        width: max(900px);
+        height: 50px;
+        margin-top: 20px;
+        margin-bottom: 10px;
+        padding-left: 20px;
+        padding-right: 20px;
+        border: 1px solid #edeff2;
+        border-radius: 3px;
+      }
 
-    .form-group textarea.form-input {
-      height: 100px;
-    }
+      .form-group textarea.form-input {
+        height: 100px;
+      }
 
-    .comment-button {
-      text-align: right;
-    }
-  </style>
-</head>
+      .comment-button {
+        text-align: right;
+      }
+    </style>
+  </head>
 
-<body>
-  <nav class="navbar navbar-light" style="background-color: #e3f2fd">
-    <div class="container d-flex flex-column flex-md-row justify-content-between">
-      <a class="py-2 d-none d-md-inline-block" href="/bucket">Home</a>
-      {% if request.user.is_authenticated %}
-      <a href="/bucket/profile/{{user.id}}/" class="py-2 d-none d-md-inline-block">{{request.user.username}}</a>
-      <a class="py-2 d-none d-md-inline-block" href="/bucket/create/">새로만들기</a>
-      <form action="/users/logout/" method="post">
-        {% csrf_token %}
-        <button type="submit" class="btn btn-link">로그아웃</button>
-      </form>
-      {% else %}
-      <a class="py-2 d-none d-md-inline-block" href="/users/login/">로그인</a>
-      <a class="py-2 d-none d-md-inline-block" href="/users/signup/">회원가입</a>
-      {%endif%}
-    </div>
-  </nav>
-  {% block content %} {% endblock %}
-  <div class="container">
-    <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
-      <div class="col-md-4 d-flex align-items-center">
-        <a href="/" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
-          <svg class="bi" width="30" height="24">
-            <use xlink:href="#bootstrap"></use>
-          </svg>
-        </a>
-        <span class="mb-3 mb-md-0 text-muted">2023 4GO7JO, AI</span>
+  <body>
+    <nav class="navbar navbar-light" style="background-color: #e3f2fd">
+      <div
+        class="container d-flex flex-column flex-md-row justify-content-between"
+      >
+        <a class="py-2 d-none d-md-inline-block" href="/bucket">Home</a>
+        {% if request.user.is_authenticated %}
+        <a
+          href="/bucket/profile/{{user.id}}/"
+          class="py-2 d-none d-md-inline-block"
+          >{{request.user.username}}</a
+        >
+        <a class="py-2 d-none d-md-inline-block" href="/bucket/create/"
+          >새로만들기</a
+        >
+        <form action="/users/logout/" method="post">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-link">로그아웃</button>
+        </form>
+        {% else %}
+        <a class="py-2 d-none d-md-inline-block" href="/users/login/">로그인</a>
+        <a class="py-2 d-none d-md-inline-block" href="/users/signup/"
+          >회원가입</a
+        >
+        {%endif%}
       </div>
+    </nav>
+    {% block content %} {% endblock %}
+    <div class="container">
+      <footer
+        class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top"
+      >
+        <div class="col-md-4 d-flex align-items-center">
+          <a
+            href="/"
+            class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1"
+          >
+            <svg class="bi" width="30" height="24">
+              <use xlink:href="#bootstrap"></use>
+            </svg>
+          </a>
+          <span class="mb-3 mb-md-0 text-muted">2023 4GO7JO, AI</span>
+        </div>
 
-      <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
-        <li class="ms-3"><a class="text-muted" href="#"><svg class="bi" width="24" height="24">
-              <use xlink:href="#twitter"></use>
-            </svg>1</a></li>
-        <li class="ms-3"><a class="text-muted" href="#"><svg class="bi" width="24" height="24">
-              <use xlink:href="#instagram"></use>
-            </svg>2</a></li>
-        <li class="ms-3"><a class="text-muted" href="#"><svg class="bi" width="24" height="24">
-              <use xlink:href="#facebook"></use>
-            </svg>3</a></li>
-      </ul>
-    </footer>
-
-  </div>
-</body>
-
+        <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
+          <li class="ms-3">
+            <a class="text-muted" href="#"
+              ><svg class="bi" width="24" height="24">
+                <use xlink:href="#twitter"></use></svg
+              >1</a
+            >
+          </li>
+          <li class="ms-3">
+            <a class="text-muted" href="#"
+              ><svg class="bi" width="24" height="24">
+                <use xlink:href="#instagram"></use></svg
+              >2</a
+            >
+          </li>
+          <li class="ms-3">
+            <a class="text-muted" href="#"
+              ><svg class="bi" width="24" height="24">
+                <use xlink:href="#facebook"></use></svg
+              >3</a
+            >
+          </li>
+        </ul>
+      </footer>
+    </div>
+  </body>
 </html>
