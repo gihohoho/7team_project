@@ -162,14 +162,11 @@ def likes(request, bucket_id):
 @csrf_exempt
 def bookmark_create(request, bucket_id):
     if request.method == "POST":
-        if request.user in bucket.like_users.all():
-            bucket.like_users.remove(request.user)
-        else:
-            Bookmark.objects.create(
-                user=request.user,
-                bucket_id=bucket_id
-            )
-            return redirect(f'/bucket/{bucket_id}/')
+        Bookmark.objects.create(
+            user=request.user,
+            bucket_id=bucket_id
+        )
+        return redirect(f'/bucket/{bucket_id}/')
     else:
         return HttpResponse('Invalid request method', status=405)
 
