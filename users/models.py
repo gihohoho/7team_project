@@ -10,8 +10,8 @@ class MyUserManager(BaseUserManager):
         Creates and saves a User with the given email, date of
         birth and password.
         """
-        if not email:
-            raise ValueError('Users must have an email address')
+        if not email or not password or not username:
+            raise ValueError('Users must have an email address and password and username')
 
         user = self.model(
             email=self.normalize_email(email),
