@@ -7,7 +7,9 @@
     <div class="be-like-block" style="float: right">
       <button type="submit">공유하기</button>
       <div style="float: right">
-        <button type="submit">북마크</button>
+        <form action="/bucket/bookmark/{{bucket.id}}/" method="post">
+          <button type="submit">북마크</button>
+        </form>
       </div>
     </div>
 

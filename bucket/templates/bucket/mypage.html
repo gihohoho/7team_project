@@ -80,5 +80,27 @@
             </div>
         </div>
     </div>
+    <div class="bookmark">
+        <div class="text-bg-dark me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
+            <div class="my-3 py-3">
+                <h2 class="display-5">My</h2>
+                <h2 class="display-5"> Bookmark</h2>
+            </div>
+            <div class="bg-body-tertiary shadow-sm mx-auto"
+                style="width: 80%; height: 300px; border-radius: 21px 21px 21px 21px;">
+                {% for bookmark in bookmarks %}
+                    {% if bookmark.user_id == request.user.id %}
+                        {% for bucket in buckets %}
+                            {% if bookmark.bucket_id == bucket.id %}
+                                <li>
+                                    <a href="/bucket/{{ bucket.id }}/">{{ bucket.title }}</a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div> 
+    </div>
 </div>
 {% endblock %}

@@ -2,7 +2,7 @@ from django.http import HttpResponse
 from django.shortcuts import redirect, render, get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
-from bucket.models import Bucket, Comment
+from bucket.models import Bucket, Comment, Bookmark
 from users.models import User
 
 
@@ -25,8 +25,11 @@ def mypage(request):
     if request.method == "GET":
         buckets = Bucket.objects.all()
         buckets_list = buckets.filter(user_id=request.user.id)
+        bookmarks = Bookmark.objects.all()
         context = {
+            "buckets" : buckets,
             "buckets_list": buckets_list,
+            "bookmarks" : bookmarks,
         }
         return render(request, "bucket/mypage.html", context)
 
@@ -152,3 +155,21 @@ def likes(request, bucket_id):
         return redirect(f'/bucket/{bucket_id}/')
     else:
         return HttpResponse('Invalid request method', status=405)
+
+
+# 북마크
+@login_required(login_url='/users/login/')
+@csrf_exempt
+def bookmark_create(request, bucket_id):
+    if request.method == "POST":
+        if request.user in bucket.like_users.all():
+            bucket.like_users.remove(request.user)
+        else:
+            Bookmark.objects.create(
+                user=request.user,
+                bucket_id=bucket_id
+            )
+            return redirect(f'/bucket/{bucket_id}/')
+    else:
+        return HttpResponse('Invalid request method', status=405)
+
