@@ -13,7 +13,7 @@
                     style="width:200px; margin: 30px 20px;">
                 {%endif%}
                 <input type="file" name="image" />
-                <button type="submit">프로필 사진 저장</button>
+                <button type="submit" onclick="javascript:alert('프로필 사진 저장!')">프로필 사진 저장</button>
             </div>
         </form>
     </div>
@@ -32,7 +32,7 @@
                         <P> MBTI : <input type="text" name="mbti" value="{{ user.mbti | default:'내용을 입력해주세요' }}" /></P>
                         <P> TMI : <input type="text" name="tmi" value="{{ user.tmi | default:'내용을 입력해주세요' }}" /></P>
                         <P> Blog : <input type="text" name="blog" value="{{ user.blog | default:'주소를 입력해주세요'}}" /></P>
-                        <button type="submit">회원정보 수정</button>
+                        <button type="submit" onclick="javascript:alert('회원정보 수정!')">회원정보 수정</button>
                     </div>
                 </form>
             </div>
