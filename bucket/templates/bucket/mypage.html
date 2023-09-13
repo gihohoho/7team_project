@@ -10,10 +10,9 @@
         <div class="bg-body-tertiary shadow-sm mx-auto"
             style="width: 80%; height: 500px; border-radius: 21px 21px 21px 21px;">
             {%if user.image%}
-                <img src="/media/{{user.image}}"
-                    style="width:200px; margin: 30px 20px;"> 
-            {%else%}    
-                <img src="https://png.pngtree.com/png-vector/20191113/ourmid/pngtree-personal-personalization-profile-user-line-icon-vector-png-image_1984805.jpg"
+            <img src="/media/{{user.image}}" style="width:200px; margin: 30px 20px;">
+            {%else%}
+            <img src="https://png.pngtree.com/png-vector/20191113/ourmid/pngtree-personal-personalization-profile-user-line-icon-vector-png-image_1984805.jpg"
                 style="width:200px; margin: 30px 20px;">
             {%endif%}
             <div class="mypage">
@@ -30,7 +29,7 @@
                 <p>TMI : 입력 전입니다</p>
                 {%endif%}
                 {%if user.blog%}
-                <p>Blog : {{user.blog}}</p>
+                <p>Blog : <a href="http://{{user.blog}}">{{user.blog}}</a></p>
                 {%else%}
                 <p>Blog : 입력 전입니다</p>
                 {%endif%}

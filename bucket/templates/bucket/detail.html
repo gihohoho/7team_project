@@ -27,27 +27,15 @@
     <div class="be-comment">
       {% for comment in comments %}
       <div class="be-img-comment">
-        {%if user.image%}
-        <img
-          src="/media/{{user.image}}"
-          style="
-            width: 75px;
-            margin: 0px -10px;
-            border-radius: 80%;
-            overflow: hidden;
-          "
-        />
+        {%if comment.user.image%}
+        <img src="/media/{{comment.user.image}}"
+          style="width:75px; margin: 0px -10px; border-radius:80%; overflow:hidden;">
         {%else%}
         <img
           src="https://png.pngtree.com/png-vector/20191113/ourmid/pngtree-personal-personalization-profile-user-line-icon-vector-png-image_1984805.jpg"
-          style="
-            width: 75px;
-            margin: 0px -10px;
-            border-radius: 80%;
-            overflow: hidden;
-          "
-        />
+          style="width:75px; margin: 0px -10px; border-radius:80%; overflow:hidden;">
         {%endif%}
+
       </div>
       <div class="be-comment-content">
         <span class="be-comment-name">
@@ -59,10 +47,7 @@
         </span>
         <p class="be-comment-text">{{ comment.content }}</p>
         <div class="comment-button">
-          <form
-            action="/bucket/comments_delete/{{bucket.id}}/{{comment.id}}/"
-            method="post"
-          >
+          <form action="/bucket/comments_delete/{{bucket.id}}/{{comment.id}}/" method="post">
             {% csrf_token %}
             <button class="btn btn-outline-dark btn-sm" type="submit">
               댓글삭제
@@ -75,20 +60,11 @@
       {% endfor %}
     </div>
     <div>
-      <form
-        class="form-block"
-        action="/bucket/comments_create/{{bucket.id}}/"
-        method="post"
-      >
+      <form class="form-block" action="/bucket/comments_create/{{bucket.id}}/" method="post">
         {% csrf_token %}
         <div class="row">
           <div class="form-group">
-            <textarea
-              class="form-input"
-              type="text"
-              name="content"
-              placeholder="댓글을 입력해주세요"
-            ></textarea>
+            <textarea class="form-input" type="text" name="content" placeholder="댓글을 입력해주세요"></textarea>
           </div>
         </div>
         <div>
