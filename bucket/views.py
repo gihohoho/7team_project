@@ -13,7 +13,7 @@ def bucket(request):
         users = User.objects.all()
         context = {
             "buckets": buckets,
-            "users": users, 
+            "users": users,
         }
         return render(request, "bucket/bucket.html", context)
 
@@ -29,14 +29,14 @@ def mypage(request):
             "buckets_list": buckets_list,
         }
         return render(request, "bucket/mypage.html", context)
-    
 
-# 다른 유저 bucket 페이지    
+
+# 다른 유저 bucket 페이지
 @csrf_exempt
 def userbucket(request, user_id):
     if request.method == "GET":
-        user = get_object_or_404(User, id=user_id) 
-        buckets_list = Bucket.objects.filter(user=user)  
+        user = get_object_or_404(User, id=user_id)
+        buckets_list = Bucket.objects.filter(user=user)
 
         context = {
             'user': user,
@@ -69,7 +69,7 @@ def profile_image(request, user_id):
         context = {
             'user': user
         }
-        return render(request, "bucket/profile.html",context)
+        return render(request, "bucket/profile.html", context)
     elif request.method == "POST":
         user = User.objects.get(id=user_id)
         user.image = request.FILES.get("image")
@@ -95,8 +95,8 @@ def profile(request, user_id):
         user.blog = request.POST["blog"]
         user.save()
         return redirect(f'/bucket/profile/{user_id}/')
-    
-    
+
+
 # 개인 게시물 페이지
 def detail(request, bucket_id):
     bucket = Bucket.objects.get(id=bucket_id)
@@ -133,5 +133,22 @@ def comments_delete(request, bucket_id, comment_id):
             return redirect(f'/bucket/{bucket_id}/')
         else:
             return HttpResponse('not allowed to delete', status=403)
+    else:
+        return HttpResponse('Invalid request method', status=405)
+
+
+# 좋아요
+@login_required(login_url='/users/login/')
+def likes(request, bucket_id):
+    print(request.method)
+    bucket = Bucket.objects.get(id=bucket_id)
+
+    if request.method == "POST":
+        if request.user in bucket.like_users.all():
+            bucket.like_users.remove(request.user)
+        else:
+            bucket.like_users.add(request.user)
+
+        return redirect(f'/bucket/{bucket_id}/')
     else:
         return HttpResponse('Invalid request method', status=405)

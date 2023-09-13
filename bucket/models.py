@@ -1,4 +1,5 @@
 from django.db import models
+from teamproject import settings
 
 
 class Bucket(models.Model):
@@ -7,6 +8,9 @@ class Bucket(models.Model):
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    # 좋아요
+    like_users = models.ManyToManyField(
+        settings.AUTH_USER_MODEL, related_name='like_buckets', blank=True)
 
 
 class Comment(models.Model):
