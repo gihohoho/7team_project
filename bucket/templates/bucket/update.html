@@ -1,8 +1,22 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="create">
+    <div class="update_image">
+        <form action="/bucket/bucket_image/{{bucket.id}}/" method="post" enctype="multipart/form-data">   
+            {%if bucket.image%}
+                <img src="/media/{{bucket.image}}">
+            {%else%}
+                <img class="image" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR69NqHZ5iSU6hstqlhMGcigGhmdmDTBalgpg&usqp=CAU">
+            {%endif%}
+            <div class="btn1">
+                <input class="btn btn-sm btn-outline-secondary" type="file" name="image" style="width:60%" />
+                <button class="btn btn-sm btn-outline-secondary" type="submit" style="">
+                    사진 수정
+                </button>
+            </div>
+        </form>
+    </div>
     <div class="text-center mb-4">
-        <img class="mb-5 p-4" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR69NqHZ5iSU6hstqlhMGcigGhmdmDTBalgpg&usqp=CAU" alt="" width="400" height="250">
         <div>
             {%csrf_token%}
             <form action="/bucket/update/{{ bucket.id }}/" method="POST">
@@ -19,16 +33,3 @@
 </div>    
 {% endblock %}
 
-<form action="/bucket/bucket_image/" method="post" enctype="multipart/form-data">   
-    {%if bucket.image%}
-        <img src="/media/{{bucket.image}}" style="width:200px; height:40%; margin: 30px 20px;">
-    {%else%}
-        <img class="image" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR69NqHZ5iSU6hstqlhMGcigGhmdmDTBalgpg&usqp=CAU" alt="">
-    {%endif%}
-    <div class="btn1">
-        <input class="btn btn-sm btn-outline-secondary" type="file" name="image" style="width:60%" />
-        <button class="btn btn-sm btn-outline-secondary" type="submit" style="">
-            사진 저장
-        </button>
-    </div>
-</form>
