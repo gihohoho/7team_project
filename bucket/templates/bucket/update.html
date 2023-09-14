@@ -19,3 +19,16 @@
 </div>    
 {% endblock %}
 
+<form action="/bucket/bucket_image/" method="post" enctype="multipart/form-data">   
+    {%if bucket.image%}
+        <img src="/media/{{bucket.image}}" style="width:200px; height:40%; margin: 30px 20px;">
+    {%else%}
+        <img class="image" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR69NqHZ5iSU6hstqlhMGcigGhmdmDTBalgpg&usqp=CAU" alt="">
+    {%endif%}
+    <div class="btn1">
+        <input class="btn btn-sm btn-outline-secondary" type="file" name="image" style="width:60%" />
+        <button class="btn btn-sm btn-outline-secondary" type="submit" style="">
+            사진 저장
+        </button>
+    </div>
+</form>
