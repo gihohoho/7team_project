@@ -5,7 +5,7 @@ from django.contrib.auth.models import (
 
 
 class MyUserManager(BaseUserManager):
-    def create_user(self, email, username, password=None):
+    def create_user(self, email, username, mbti, tmi, blog, password=None):
         """
         Creates and saves a User with the given email, date of
         birth and password.
@@ -16,6 +16,9 @@ class MyUserManager(BaseUserManager):
         user = self.model(
             email=self.normalize_email(email),
             username=username,
+            mbti=mbti,
+            tmi=tmi,
+            blog=blog,
         )
 
         user.set_password(password)
@@ -31,6 +34,9 @@ class MyUserManager(BaseUserManager):
             email,
             password=password,
             username=username,
+            mbti=None,   # createsuperuser 명령어 입력시 나오는 과정에 mbti,tmi,blog 값을 넣어주는 방법을 몰라 그냥 임의로 None값을 집어넣어줌
+            tmi=None,
+            blog=None,
         )
         user.is_admin = True
         user.save(using=self._db)
