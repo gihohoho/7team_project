@@ -181,9 +181,10 @@ def comments_delete(request, bucket_id, comment_id):
             messages.info(request, '댓글 삭제 완료')
             return redirect(f'/bucket/{bucket_id}/')
         else:
+            messages.info(request, '작성자만 가능한 기능입니다')
             return redirect(f'/bucket/{bucket_id}/')
     else:
-        messages.info(request, '작성자만 가능합니다')
+        messages.info(request, '잘못된 접근입니다')
         return redirect(f'/bucket/{bucket_id}/')
 
 
