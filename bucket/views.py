@@ -8,8 +8,6 @@ from django.db import models  # updated_at 설정을 위한 models import
 from django.contrib import messages
 
 # 메인페이지
-
-
 def bucket(request):
     if request.method == "GET":
         buckets = Bucket.objects.all()
@@ -78,15 +76,17 @@ def update(request, bucket_id):
     if request.method == "GET":
         return render(request, "bucket/update.html", context)
     elif request.method == "POST":
-        bucket.title = request.POST.get('title')
-        bucket.content = request.POST.get('content')
-        bucket.updated_at = models.DateTimeField(auto_now=True)
-        bucket.save()
-        messages.info(request, 'Bucket 수정 완료!')
-        return redirect(f'/bucket/')
-    else:
-        messages.info(request, '작성자만 가능한 기능입니다')
-        return redirect(f'/bucket/')
+        if bucket.user == request.user:
+            bucket.title = request.POST.get('title')
+            bucket.content = request.POST.get('content')
+            bucket.updated_at = models.DateTimeField(auto_now=True)
+            bucket.save()
+            messages.info(request, 'Bucket 수정 완료!')
+            return redirect(f'/bucket/')
+        else:
+            messages.info(request, '작성자만 가능한 기능입니다')
+            return redirect(f'/bucket/{bucket_id}/')
+
 
 # 게시글 삭제
 
@@ -101,7 +101,7 @@ def bdelete(request, bucket_id):
         return redirect("/bucket/mypage/")
     else:
         messages.info(request, '작성자만 가능한 기능입니다')
-        return redirect("/bucket/mypage/")
+        return redirect(f"/bucket/{bucket_id}/")
 
 
 # 프로필 사진 수정
