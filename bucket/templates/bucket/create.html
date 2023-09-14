@@ -5,13 +5,13 @@
         <div class="create">
             {%csrf_token%}    
             <form action="/bucket/create/" method="POST">
-                <div class="form-label-group">
+                <div class="form-label-group" >
                     <input type="text" class="form-control" placeholder="제목을 입력하세요" name="title">
                 </div>
-                <div class="form-label-group">
-                    <input type="text" class="form-control input-lg" placeholder="내용을 입력하세요" name="content" style="margin-top:20px">
+                <div class="bucket_content">
+                    <textarea type="text" class="form-control input-lg" placeholder="내용을 입력하세요" name="content" style="margin-top:20px"></textarea>
                 </div>
-                <button class="btn btn-lg btn-primary btn-block" type="submit" style="margin-top:20px">bucket 저장</button>
+                <button class="btn btn-lg btn-primary btn-block" type="submit" style="width: 200px; margin: 20px auto 20px auto;">bucket 저장</button>
             </form>
         </div>
 {% endblock %}
