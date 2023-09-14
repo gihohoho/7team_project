@@ -51,10 +51,6 @@
       }
 
       /****************** create.html *******************/
-      .create {
-        width: 350px;
-        margin: 55px auto 180px auto;
-      }
 
       .create .form-label-group {
         width: 350px;
@@ -219,7 +215,9 @@
         >
         <form action="/users/logout/" method="post">
           {% csrf_token %}
-          <button type="submit" class="btn btn-link">로그아웃</button>
+          <button type="submit" class="btn btn-link" style="margin-top: 12px">
+            로그아웃
+          </button>
         </form>
         {% else %}
         <a class="py-2 d-none d-md-inline-block" href="/users/login/">로그인</a>
