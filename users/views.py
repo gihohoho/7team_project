@@ -12,6 +12,9 @@ def signup(request):
             email=request.POST['email'],
             username=request.POST['nickname'],
             password=request.POST['password'],
+            mbti=request.POST['mbti'].upper(),
+            tmi=request.POST['tmi'],
+            blog=request.POST['blog'],
         )
         return redirect('/users/login/')
     else:
