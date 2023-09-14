@@ -4,7 +4,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
 from bucket.models import Bucket, Comment
 from users.models import User
-from django.db import models #updated_at 설정을 위한 models import
+from django.db import models  # updated_at 설정을 위한 models import
 from django.contrib import messages
 
 # 메인페이지
@@ -89,6 +89,8 @@ def update(request, bucket_id):
         return redirect(f'/bucket/')
 
 # 게시글 삭제
+
+
 @login_required(login_url='/users/login/')
 @csrf_exempt
 def bdelete(request, bucket_id):
@@ -193,10 +195,10 @@ def likes(request, bucket_id):
     if request.method == "POST":
         if request.user in bucket.like_users.all():
             bucket.like_users.remove(request.user)
-            messages.info(request, '좋아요 완료')
+            messages.info(request, '좋아요 취소 완료')
         else:
             bucket.like_users.add(request.user)
-            messages.info(request, '좋아요 취소 완료')
+            messages.info(request, '좋아요 완료')
         return redirect(f'/bucket/{bucket_id}/')
     else:
         messages.info(request, '잘못된 접근입니다')
@@ -211,10 +213,10 @@ def bookmarks(request, bucket_id):
     if request.method == "POST":
         if request.user in bucket.bookmarks.all():
             bucket.bookmarks.remove(request.user)
-            messages.info(request, '북마크 완료')
+            messages.info(request, '북마크 취소 완료')
         else:
             bucket.bookmarks.add(request.user)
-            messages.info(request, '북마크 취소 완료')
+            messages.info(request, '북마크 완료')
         return redirect(f'/bucket/{bucket_id}/')
     else:
         messages.info(request, '잘못된 접근입니다')
