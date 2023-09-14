@@ -1,31 +1,45 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="main">
-    <div class="left" style="margin: 90px;">
-        <h2 class="display-5" style="margin:auto 70px;">프로필사진</h2>
-        <div class="bg-body-tertiary shadow-sm mx-auto"
-            style="width: 80%; height: 300px; border-radius: 21px 21px 21px 21px; margin-top:20px;">
-            <img src="https://png.pngtree.com/png-vector/20191113/ourmid/pngtree-personal-personalization-profile-user-line-icon-vector-png-image_1984805.jpg"
-                style="width:200px; margin: 30px 20px;">
-        </div>
+<section class="jumbotron text-center">
+    <div class="container">
+        <h1 class="jumbotron-heading">Profile 수정 페이지</h1>
     </div>
-    <div class="right">
-        <div class="bg-body-tertiary me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden"
+</section>
+<div class="main_profile">
+    <div class="left_profile">
+        <form action="/bucket/profile_image/{{ user.id }}/" method="post" enctype="multipart/form-data">
+            <h2 class="display-5" style="margin:auto 70px;">프로필사진</h2>
+            <div class="bg-body-tertiary shadow-sm mx-auto"
+                style="width: 80%; height: 400px; border-radius: 21px 21px 21px 21px; margin-top:35px;">
+                {%if user.image%}
+                <img src="/media/{{user.image}}" style="width:200px; margin: 30px 20px;">
+                {%else%}
+                <img src="https://png.pngtree.com/png-vector/20191113/ourmid/pngtree-personal-personalization-profile-user-line-icon-vector-png-image_1984805.jpg"
+                    style="width:200px; margin: 30px 20px;">
+                {%endif%}
+                <div class="btn">
+                    <input class="btn btn-sm btn-outline-secondary"   type="file" name="image" style="width:90%"/>
+                    <button class="btn btn-sm btn-outline-secondary" type="submit" onclick="javascript:alert('프로필 사진 저장!')" style="margin-top:10px;">프로필 사진 저장</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="right_profile">
+        <div class="bg-body-tertiary px-5 text-center overflow-hidden"
             style="width:600px;">
             <div class="my-3 p-3">
                 <h2 class="display-5">User 정보</h2>
             </div>
-            <div class="bg-dark shadow-sm mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;">
-                {%csrf_token%}
+            <div class="bg-dark shadow-sm mx-auto" style="width: 80%; height: 400px; border-radius: 21px 21px 0 0;">
                 <form action="/bucket/profile/{{ user.id }}/" method="post">
+                    {%csrf_token%}
                     <div style="color:white;">
                         <P class="p-3"> Email : {{user.email}}</P>
-                        <P> ID : <input type="text" name="username" value="{{user.username}}" /></P>
-                        <P> MBTI : <input type="text" name="mbti" value="{{ user.mbti | default:'내용을 입력해주세요' }}" /></P>
-                        <P> TMI : <input type="text" name="tmi" value="{{ user.tmi | default:'내용을 입력해주세요' }}" /></P>
-                        <P> Blog : <input type="email" name="blog" value="{{ user.blog | default:'주소를 입력해주세요'}}" /></P>
-
-                        <button type="submit">회원정보 수정</button>
+                        <P> ID : <input type="text" name="username" value="{{user.username}}" style="margin-top:10px;"/></P>
+                        <P> MBTI : <input type="text" name="mbti" value="{{ user.mbti | default:'내용을 입력해주세요' }}" style="margin-top:10px;"/></P>
+                        <P> TMI : <input type="text" name="tmi" value="{{ user.tmi | default:'내용을 입력해주세요' }}" style="margin-top:10px;"/></P>
+                        <P> Blog : <input type="text" name="blog" value="{{ user.blog | default:'주소를 입력해주세요'}}" style="margin-top:10px;"/></P>
+                        <button class="btn btn-sm btn-outline-secondary" type="submit" onclick="javascript:alert('회원정보 수정!')" style="margin-top:20px;">회원정보 수정</button>
                     </div>
                 </form>
             </div>

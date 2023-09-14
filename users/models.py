@@ -10,8 +10,8 @@ class MyUserManager(BaseUserManager):
         Creates and saves a User with the given email, date of
         birth and password.
         """
-        if not email:
-            raise ValueError('Users must have an email address')
+        if not email or not password or not username:
+            raise ValueError('Users must have an email address and password and username')
 
         user = self.model(
             email=self.normalize_email(email),
@@ -57,6 +57,7 @@ class User(AbstractBaseUser):
     mbti = models.CharField(max_length=4, null=True, blank=True)
     tmi = models.TextField(null=True, blank=True)
     blog = models.EmailField(unique=True, null=True, blank=True)
+    image = models.ImageField(upload_to='profile_images/', blank=True, null=True)
 
     objects = MyUserManager()
 

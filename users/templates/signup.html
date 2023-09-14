@@ -5,16 +5,155 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Signup Page</title>
+    <style>
+        * {
+            margin: 0px;
+            padding: 0px;
+            text-decoration: none;
+            font-family: sans-serif;
+
+        }
+
+        body {
+            background-image: #34495e;
+        }
+
+        .joinForm {
+            position: absolute;
+            width: 400px;
+            height: 620px;
+            padding: 30px, 20px;
+            background-color: white;
+            text-align: center;
+            top: 42%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 15px;
+        }
+
+        .joinForm h2 {
+            text-align: center;
+            margin: 30px;
+        }
+
+        .textForm {
+            border-bottom: 2px solid #adadad;
+            margin: 30px;
+            padding: 10px 10px;
+        }
+
+
+        .nickname {
+            width: 100%;
+            border: none;
+            outline: none;
+            color: #636e72;
+            font-size: 16px;
+            height: 25px;
+            background: none;
+        }
+
+        .pw {
+            width: 100%;
+            border: none;
+            outline: none;
+            color: #636e72;
+            font-size: 16px;
+            height: 25px;
+            background: none;
+        }
+
+        .mbti {
+            width: 100%;
+            border: none;
+            outline: none;
+            color: #636e72;
+            font-size: 16px;
+            height: 25px;
+            background: none;
+        }
+
+        .email {
+            width: 100%;
+            border: none;
+            outline: none;
+            color: #636e72;
+            font-size: 16px;
+            height: 25px;
+            background: none;
+        }
+
+        .tmi {
+            width: 100%;
+            border: none;
+            outline: none;
+            color: #636e72;
+            font-size: 16px;
+            height: 25px;
+            background: none;
+        }
+
+        .blog {
+            width: 100%;
+            border: none;
+            outline: none;
+            color: #636e72;
+            font-size: 16px;
+            height: 25px;
+            background: none;
+        }
+
+        .btn {
+            position: relative;
+            left: 40%;
+            transform: translateX(-50%);
+            margin-bottom: 40px;
+            width: 80%;
+            height: 40px;
+            background: linear-gradient(125deg, #81ecec, #6c5ce7, #81ecec);
+            background-position: left;
+            background-size: 200%;
+            color: white;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            transition: 0.4s;
+            display: inline;
+        }
+
+        .btn:hover {
+            background-position: right;
+        }
+    </style>
 </head>
 
 <body>
-    <h1>회원가입 페이지입니다.</h1>
-    <form action="/users/signup/" method="post">
+    <form action="/users/signup/" method="post" class="joinForm" onsubmit="DoJoinForm__submit(this); return false;">
         {% csrf_token %}
-        <input type="email" name="email" placeholder="이메일주소" />
-        <input type="text" name="nickname" placeholder="닉네임" />
-        <input type="password" name="password" placeholder="비밀번호" />
-        <button type="submit">회원가입</button>
+        <h2>회원가입 페이지입니다.</h2>
+        <div class="textForm">
+            <input type="email" name="email" class="email" placeholder="이메일주소">
+        </div>
+        <div class="textForm">
+            <input type="text" name="nickname" class="nickname" placeholder="닉네임">
+            </input>
+        </div>
+        <div class="textForm">
+            <input type="password" name="password" class="pw" placeholder="비밀번호">
+        </div>
+        <div class="textForm">
+            <input type="password" name="password_Confirm" class="pw" placeholder="비밀번호 확인">
+        </div>
+        <div class="textForm">
+            <input type="text" name="mbti" class="mbti" placeholder="MBTI">
+        </div>
+        <div class="textForm">
+            <input type="text" name="tmi" class="tmi" placeholder="TMI">
+        </div>
+        <div class="textForm">
+            <input type="text" name="blog" class="blog" placeholder="블로그주소">
+        </div>
+        <input type="submit" class="btn" value="S I G N U P" />
     </form>
 </body>
 
