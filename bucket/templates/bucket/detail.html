@@ -12,8 +12,9 @@
         {% post_to_twitter "Twitter" post.get_absolute_url "Twitter" %}
       </button>
       <div style="float: right">
-        <form action="/bucket/bookmark/{{bucket.id}}/" method="post">
-          <button class="like-button">북마크</button>
+        <form action="/bucket/bookmarks/{{bucket.id}}/" method="post">
+          {% csrf_token %}
+          <button class="like-button" type="submit">북마크</button>
         </form>
       </div>
     </div>
