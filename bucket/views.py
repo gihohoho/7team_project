@@ -8,6 +8,8 @@ from django.db import models #updated_at 설정을 위한 models import
 from django.contrib import messages
 
 # 메인페이지
+
+
 def bucket(request):
     if request.method == "GET":
         buckets = Bucket.objects.all()
@@ -69,7 +71,7 @@ def create(request):
 @login_required(login_url='/users/login/')
 @csrf_exempt
 def update(request, bucket_id):
-    bucket = Bucket.objects.get(id = bucket_id)
+    bucket = Bucket.objects.get(id=bucket_id)
     context = {
         'bucket': bucket,
     }
@@ -82,17 +84,22 @@ def update(request, bucket_id):
         bucket.save()
         messages.info(request, 'Bucket 수정 완료!')
         return redirect(f'/bucket/')
-
+    else:
+        messages.info(request, '작성자만 가능한 기능입니다')
+        return redirect(f'/bucket/')
 
 # 게시글 삭제
 @login_required(login_url='/users/login/')
 @csrf_exempt
 def bdelete(request, bucket_id):
     buckets = Bucket.objects.get(id=bucket_id)
-    buckets.delete()
-    messages.info(request, 'Bucket 삭제 완료!')
-    return redirect("/bucket/mypage/")
-    
+    if buckets.user == request.user:
+        buckets.delete()
+        messages.info(request, 'Bucket 삭제 완료!')
+        return redirect("/bucket/mypage/")
+    else:
+        messages.info(request, '작성자만 가능한 기능입니다')
+        return redirect("/bucket/mypage/")
 
 
 # 프로필 사진 수정
