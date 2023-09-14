@@ -2,7 +2,7 @@ from django.http import HttpResponse
 from django.shortcuts import redirect, render, get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
-from bucket.models import Bucket, Comment, Bookmark
+from bucket.models import Bucket, Comment
 from users.models import User
 from django.db import models #updated_at 설정을 위한 models import
 
@@ -25,7 +25,7 @@ def mypage(request):
     if request.method == "GET":
         buckets = Bucket.objects.all()
         buckets_list = buckets.filter(user_id=request.user.id)
-        bookmarks = Bookmark.objects.all()
+        bookmarks = request.user.bookmark_buckets.all()
         context = {
             "buckets": buckets,
             "buckets_list": buckets_list,

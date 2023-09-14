@@ -17,6 +17,6 @@ urlpatterns = [
          views.comments_delete),  # 댓글삭제
     path('likes/<int:bucket_id>/', views.likes, name='likes'),  # 좋아요
     path('bookmarks/<int:bucket_id>/', views.bookmarks, name='bookmarks'),  # 북마크
-    path('update/<int:pk>/', views.update, name="update"), #게시글 수정
-    path('bdelete/<int:pk>/', views.bdelete), #게시글 삭제
+    path('update/<int:bucket_id>/', views.update, name="update"), #게시글 수정
+    path('bdelete/<int:bucket_id>/', views.bdelete), #게시글 삭제
 ]
