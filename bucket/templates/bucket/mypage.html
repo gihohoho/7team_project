@@ -88,18 +88,18 @@
             <div class="bg-body-tertiary shadow-sm mx-auto"
                 style="width: 80%; height: 300px; border-radius: 21px 21px 21px 21px;">
                 {% for bookmark in bookmarks %}
-                    {% if bookmark.user_id == request.user.id %}
-                        {% for bucket in buckets %}
-                            {% if bookmark.bucket_id == bucket.id %}
-                                <li>
-                                    <a href="/bucket/{{ bucket.id }}/">{{ bucket.title }}</a>
-                                </li>
-                            {% endif %}
-                        {% endfor %}
-                    {% endif %}
+                {% if bookmark.user_id == request.user.id %}
+                {% for bucket in buckets %}
+                {% if bookmark.bucket_id == bucket.id %}
+                <li>
+                    <a href="/bucket/{{ bucket.id }}/">{{ bucket.title }}</a>
+                </li>
+                {% endif %}
+                {% endfor %}
+                {% endif %}
                 {% endfor %}
             </div>
-        </div> 
+        </div>
     </div>
 </div>
 {% endblock %}
