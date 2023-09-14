@@ -4,7 +4,8 @@ from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
 from bucket.models import Bucket, Comment
 from users.models import User
-from django.db import models  # updated_at 설정을 위한 models import
+from django.db import models #updated_at 설정을 위한 models import
+from django.contrib import messages
 
 # 메인페이지
 
@@ -62,6 +63,7 @@ def create(request):
             content=request.POST["content"],
             user=request.user,
         )
+        messages.info(request, 'Bucket 새로 만들기 완료!')
         return redirect("/bucket/mypage/")
 
 
@@ -76,15 +78,15 @@ def update(request, bucket_id):
     if request.method == "GET":
         return render(request, "bucket/update.html", context)
     elif request.method == "POST":
-        if bucket.user == request.user:
-            bucket.title = request.POST.get('title')
-            bucket.content = request.POST.get('content')
-            bucket.updated_at = models.DateTimeField(auto_now=True)
-            bucket.save()
-            return redirect(f'/bucket/')
-        else:
-            return HttpResponse('not allowed to update', status=403)
-
+        bucket.title = request.POST.get('title')
+        bucket.content = request.POST.get('content')
+        bucket.updated_at = models.DateTimeField(auto_now=True)
+        bucket.save()
+        messages.info(request, 'Bucket 수정 완료!')
+        return redirect(f'/bucket/')
+    else:
+        messages.info(request, '작성자만 가능한 기능입니다')
+        return redirect(f'/bucket/')
 
 # 게시글 삭제
 @login_required(login_url='/users/login/')
@@ -93,9 +95,11 @@ def bdelete(request, bucket_id):
     buckets = Bucket.objects.get(id=bucket_id)
     if buckets.user == request.user:
         buckets.delete()
+        messages.info(request, 'Bucket 삭제 완료!')
         return redirect("/bucket/mypage/")
     else:
-        return HttpResponse('not allowed to delete', status=403)
+        messages.info(request, '작성자만 가능한 기능입니다')
+        return redirect("/bucket/mypage/")
 
 
 # 프로필 사진 수정
@@ -112,6 +116,7 @@ def profile_image(request, user_id):
         user = User.objects.get(id=user_id)
         user.image = request.FILES.get("image")
         user.save()
+        messages.info(request, '프로필 사진 수정 완료!')
         return redirect(f'/bucket/profile/{user_id}/')
 
 
@@ -132,6 +137,7 @@ def profile(request, user_id):
         user.tmi = request.POST["tmi"]
         user.blog = request.POST["blog"]
         user.save()
+        messages.info(request, '프로필 정보 수정 완료!')
         return redirect(f'/bucket/profile/{user_id}/')
 
 
@@ -156,9 +162,11 @@ def comments_create(request, bucket_id):
             user=request.user,
             bucket_id=bucket_id
         )
+        messages.info(request, '댓글 추가 완료')
         return redirect(f'/bucket/{bucket_id}/')
     else:
-        return HttpResponse('Invalid request method', status=405)
+        messages.info(request, '잘못된 접근입니다')
+        return redirect(f'/bucket/{bucket_id}/')
 
 
 # 댓글삭제
@@ -168,11 +176,13 @@ def comments_delete(request, bucket_id, comment_id):
         comment = Comment.objects.get(id=comment_id)
         if comment.user == request.user:
             comment.delete()
+            messages.info(request, '댓글 삭제 완료')
             return redirect(f'/bucket/{bucket_id}/')
         else:
-            return HttpResponse('not allowed to delete', status=403)
+            return redirect(f'/bucket/{bucket_id}/')
     else:
-        return HttpResponse('Invalid request method', status=405)
+        messages.info(request, '작성자만 가능합니다')
+        return redirect(f'/bucket/{bucket_id}/')
 
 
 # 좋아요
@@ -183,12 +193,14 @@ def likes(request, bucket_id):
     if request.method == "POST":
         if request.user in bucket.like_users.all():
             bucket.like_users.remove(request.user)
+            messages.info(request, '좋아요 완료')
         else:
             bucket.like_users.add(request.user)
-
+            messages.info(request, '좋아요 취소 완료')
         return redirect(f'/bucket/{bucket_id}/')
     else:
-        return HttpResponse('Invalid request method', status=405)
+        messages.info(request, '잘못된 접근입니다')
+        return redirect(f'/bucket/{bucket_id}/')
 
 
 # 북마크
@@ -199,9 +211,11 @@ def bookmarks(request, bucket_id):
     if request.method == "POST":
         if request.user in bucket.bookmarks.all():
             bucket.bookmarks.remove(request.user)
+            messages.info(request, '북마크 완료')
         else:
             bucket.bookmarks.add(request.user)
-
+            messages.info(request, '북마크 취소 완료')
         return redirect(f'/bucket/{bucket_id}/')
     else:
-        return HttpResponse('Invalid request method', status=405)
+        messages.info(request, '잘못된 접근입니다')
+        return redirect(f'/bucket/{bucket_id}/')
