@@ -4,9 +4,11 @@ from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
 from bucket.models import Bucket, Comment
 from users.models import User
-from django.db import models #updated_at 설정을 위한 models import
+from django.db import models  # updated_at 설정을 위한 models import
 
 # 메인페이지
+
+
 def bucket(request):
     if request.method == "GET":
         buckets = Bucket.objects.all()
@@ -67,18 +69,21 @@ def create(request):
 @login_required(login_url='/users/login/')
 @csrf_exempt
 def update(request, bucket_id):
-    bucket = Bucket.objects.get(id = bucket_id)
+    bucket = Bucket.objects.get(id=bucket_id)
     context = {
         'bucket': bucket,
     }
     if request.method == "GET":
         return render(request, "bucket/update.html", context)
     elif request.method == "POST":
-        bucket.title = request.POST.get('title')
-        bucket.content = request.POST.get('content')
-        bucket.updated_at = models.DateTimeField(auto_now=True)
-        bucket.save()
-        return redirect(f'/bucket/')
+        if bucket.user == request.user:
+            bucket.title = request.POST.get('title')
+            bucket.content = request.POST.get('content')
+            bucket.updated_at = models.DateTimeField(auto_now=True)
+            bucket.save()
+            return redirect(f'/bucket/')
+        else:
+            return HttpResponse('not allowed to update', status=403)
 
 
 # 게시글 삭제
@@ -86,8 +91,11 @@ def update(request, bucket_id):
 @csrf_exempt
 def bdelete(request, bucket_id):
     buckets = Bucket.objects.get(id=bucket_id)
-    buckets.delete()
-    return redirect("/bucket/mypage/")
+    if buckets.user == request.user:
+        buckets.delete()
+        return redirect("/bucket/mypage/")
+    else:
+        return HttpResponse('not allowed to delete', status=403)
 
 
 # 프로필 사진 수정
