@@ -5,6 +5,13 @@
         <h1 class="jumbotron-heading">My Bucket List</h1>
     </div>
 </section>
+{% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-info" role="alert">
+      {{ message.message }}
+    </div>  
+    {% endfor %}
+{% endif %}
 <div class="main">
     <div class="left">
         <div class="bg-body-tertiary shadow-sm mx-auto"
