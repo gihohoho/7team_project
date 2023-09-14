@@ -6,15 +6,22 @@ from bucket.models import Bucket, Comment
 from users.models import User
 from django.db import models  # updated_at 설정을 위한 models import
 from django.contrib import messages
+from django.core.paginator import Paginator
 
 # 메인페이지
 def bucket(request):
     if request.method == "GET":
         buckets = Bucket.objects.all()
         users = User.objects.all()
+        
+        page = request.GET.get("page", 1) 
+        paginator = Paginator(buckets, 6)
+        bucket = paginator.get_page(page)
+        
         context = {
             "buckets": buckets,
             "users": users,
+            "page": bucket,
         }
         return render(request, "bucket/bucket.html", context)
 
@@ -26,11 +33,18 @@ def mypage(request):
     if request.method == "GET":
         buckets = Bucket.objects.all()
         buckets_list = buckets.filter(user_id=request.user.id)
+        
+        page = request.GET.get("page", 1) 
+        paginator = Paginator(buckets_list, 6)
+        bucket = paginator.get_page(page)
+        
         bookmarks = request.user.bookmark_buckets.all()
+        
         context = {
             "buckets": buckets,
             "buckets_list": buckets_list,
             "bookmarks": bookmarks,
+            "page": bucket,
         }
         return render(request, "bucket/mypage.html", context)
 
@@ -41,7 +55,6 @@ def userbucket(request, user_id):
     if request.method == "GET":
         user = get_object_or_404(User, id=user_id)
         buckets_list = Bucket.objects.filter(user=user)
-
         context = {
             'user': user,
             "buckets_list": buckets_list,

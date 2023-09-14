@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% block content %}
+{% block content %} 
 <section class="jumbotron text-center">
     <div class="container">
         <h1 class="jumbotron-heading">Bucket List</h1>
@@ -15,7 +15,7 @@
         <div class="text-bg-dark me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
             <div class="my-3 py-3">
                 <h2 class="display-5">User</h2>
-                <h2 class="display-5"> Bucket List</h2>
+                <h2 class="display-5">Bucket List</h2>
             </div>
             <div class="bg-body-tertiary shadow-sm mx-auto"
                 style="width: 80%; height: 300px; border-radius: 21px 21px 21px 21px;">
@@ -31,40 +31,50 @@
             </div>
         </div>
     </div>
-    <div class="right">
-        <div class="album py-5 bg-light">
-            <div class="container">
-                <div class="row">
-                    {% for bucket in buckets %}
-                    <div class="col-md-4">
-                        <div class="card mb-4 box-shadow">
-                            <img class="card-img-top"
-                                data-src="holder.js/100px225?theme=thumb&amp;bg=55595c&amp;fg=eceeef&amp;text=Thumbnail"
-                                alt="Thumbnail [100%x225]"
-                                src="https://images.newcomernet.com/blogimages/blogimage-637133179061512693.jpg"
-                                data-holder-rendered="true" style="height: 225px; width: 100%; display: block;">
-                            <div class="card-body">
-                                <p class="card-text" style="text-align: center">
-                                    작성자 : {{bucket.user.username}}
-                                </p>
-                                <p class="card-text">{{bucket.title}}</p>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div class="btn-group">
-                                        <form action="/bucket/{{bucket.id}}/" method="post">
-                                            {% csrf_token %}
-                                            <button type="submit" class="btn btn-sm btn-outline-secondary">View</button>
-                                        </form>
+    
+        <div class="right">
+            <div class="album py-5 bg-light">
+                <div class="container">
+                    <div class="row">
+                        {% for bucket in page.object_list %}
+                            <div class="col-md-4">
+                                <div class="card mb-4 box-shadow">
+                                    <img class="card-img-top"
+                                        data-src="holder.js/100px225?theme=thumb&amp;bg=55595c&amp;fg=eceeef&amp;text=Thumbnail"
+                                        alt="Thumbnail [100%x225]"
+                                        src="https://images.newcomernet.com/blogimages/blogimage-637133179061512693.jpg"
+                                        data-holder-rendered="true" style="height: 225px; width: 100%; display: block;">
+                                    <div class="card-body">
+                                        <p class="card-text" style="text-align: center">
+                                            작성자 : {{bucket.user.username}}
+                                        </p>
+                                        <p class="card-text">{{bucket.title}}</p>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div class="btn-group">
+                                                <form action="/bucket/{{bucket.id}}/" method="post">
+                                                    {% csrf_token %}
+                                                    <button type="submit" class="btn btn-sm btn-outline-secondary">View</button>
+                                                </form>
+                                            </div>
+                                            <small class="text-muted">{{bucket.created_at}}</small>
+                                        </div>
                                     </div>
-                                    <small class="text-muted">{{bucket.created_at}}</small>
                                 </div>
                             </div>
-                        </div>
+                        {% endfor %}
                     </div>
-                    {% endfor %}
                 </div>
             </div>
         </div>
-    </div>
+    
 </div>
-
+<div class="page">
+    {% if page.has_previous %}
+        <a href="?page={{page.previous_page_number}}">Prev</a>
+    {%endif%}
+    Page {{page.number}} of {{page.paginator.num_pages}}
+    {% if page.has_next %}
+    <a href="?page={{page.next_page_number}}">Next</a>
+    {% endif %}
+</div>
 {% endblock %}
