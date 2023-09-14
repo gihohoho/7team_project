@@ -6,11 +6,11 @@
     </div>
 </section>
 {% if messages %}
-    {% for message in messages %}
-    <div class="alert alert-info" role="alert">
-      {{ message.message }}
-    </div>  
-    {% endfor %}
+{% for message in messages %}
+<div class="alert alert-info" role="alert">
+    {{ message.message }}
+</div>
+{% endfor %}
 {% endif %}
 <div class="main">
     <div class="left">
@@ -22,7 +22,7 @@
             <img src="https://png.pngtree.com/png-vector/20191113/ourmid/pngtree-personal-personalization-profile-user-line-icon-vector-png-image_1984805.jpg"
                 style="width:200px; margin: 30px 20px;">
             {%endif%}
-            <div class="mypage">
+            <div class="mypage" style="padding-bottom: 10px;">
                 <a href="/bucket/profile/{{user.id}}/">{{user.username}}</a>
                 <p>{{user.email}}</p>
                 {%if user.mbti%}

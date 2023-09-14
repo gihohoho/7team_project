@@ -124,10 +124,17 @@
         .btn:hover {
             background-position: right;
         }
+
+        .footer {
+            position: relative;
+            transform: translateY(700%);
+        }
     </style>
 </head>
 
 <body>
+    {% extends 'base.html' %}
+    {% block content %}
     <form action="/users/signup/" method="post" class="joinForm" onsubmit="DoJoinForm__submit(this); return false;">
         {% csrf_token %}
         <h2>회원가입 페이지입니다.</h2>
@@ -155,6 +162,7 @@
         </div>
         <input type="submit" class="btn" value="S I G N U P" />
     </form>
+    {% endblock %}
 </body>
 
 </html>
