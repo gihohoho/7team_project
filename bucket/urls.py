@@ -8,6 +8,7 @@ urlpatterns = [
     path('', views.bucket),  # 전체 글 리스트
     path('mypage/', views.mypage),  # 내 글 리스트
     path('create/', views.create),  # 새로 만들기
+    path('bucket_image/<int:bucket_id>/', views.update_image),  # 프로필 사진 변경
     path('userbucket/<int:user_id>/', views.userbucket),  # 유저 bucket page
     path('profile/<int:user_id>/', views.profile),  # 프로필페이지
     path('profile_image/<int:user_id>/', views.profile_image),  # 프로필 사진 변경

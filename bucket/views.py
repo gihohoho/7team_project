@@ -72,10 +72,29 @@ def create(request):
         Bucket.objects.create(
             title=request.POST["title"],
             content=request.POST["content"],
+            image = request.FILES.get("image"),
             user=request.user,
         )
         messages.info(request, 'Bucket 새로 만들기 완료!')
         return redirect("/bucket/mypage/")
+
+
+# 게시글 사진 수정
+@login_required(login_url='/users/login/')
+@csrf_exempt
+def update_image(request, bucket_id):
+    if request.method == "GET":
+        bucket = Bucket.objects.get(id=bucket_id)
+        context = {
+            'bucket': bucket,
+        }
+        return render(request, f'/bucket/{bucket_id}/', context)
+    elif request.method == "POST":
+        bucket = Bucket.objects.get(id=bucket_id)
+        bucket.image = request.FILES.get("image")
+        bucket.save()
+        messages.info(request, '프로필 사진 수정 완료!')
+        return redirect(f'/bucket/{bucket_id}/')
 
 
 # 게시글 수정
@@ -95,15 +114,13 @@ def update(request, bucket_id):
             bucket.updated_at = models.DateTimeField(auto_now=True)
             bucket.save()
             messages.info(request, 'Bucket 수정 완료!')
-            return redirect(f'/bucket/')
+            return redirect(f'/bucket/{bucket_id}/')
         else:
             messages.info(request, '작성자만 가능한 기능입니다')
             return redirect(f'/bucket/{bucket_id}/')
 
 
 # 게시글 삭제
-
-
 @login_required(login_url='/users/login/')
 @csrf_exempt
 def bdelete(request, bucket_id):

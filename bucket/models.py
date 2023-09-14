@@ -8,6 +8,7 @@ class Bucket(models.Model):
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    image = models.ImageField(upload_to='bucket_images/',blank=True, null=True)
     # 좋아요
     like_users = models.ManyToManyField(
         settings.AUTH_USER_MODEL, related_name='like_buckets', blank=True)
