@@ -93,7 +93,7 @@ def update_image(request, bucket_id):
         bucket = Bucket.objects.get(id=bucket_id)
         bucket.image = request.FILES.get("image")
         bucket.save()
-        messages.info(request, '프로필 사진 수정 완료!')
+        messages.info(request, '사진 수정 완료!')
         return redirect(f'/bucket/{bucket_id}/')
 
 
@@ -116,6 +116,7 @@ def update(request, bucket_id):
             bucket.title = request.POST.get('title')
             bucket.content = request.POST.get('content')
             bucket.updated_at = models.DateTimeField(auto_now=True)
+            bucket.image = request.FILES.get("image")
             bucket.save()
             messages.info(request, 'Bucket 수정 완료!')
             return redirect(f'/bucket/{bucket_id}/')
