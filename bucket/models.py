@@ -11,6 +11,9 @@ class Bucket(models.Model):
     # 좋아요
     like_users = models.ManyToManyField(
         settings.AUTH_USER_MODEL, related_name='like_buckets', blank=True)
+    # 북마크
+    bookmarks = models.ManyToManyField(
+        settings.AUTH_USER_MODEL, related_name='bookmark_buckets', blank=True)
 
 
 class Comment(models.Model):
@@ -19,8 +22,3 @@ class Comment(models.Model):
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-
-
-class Bookmark(models.Model):
-    user = models.ForeignKey("users.User", on_delete=models.CASCADE)
-    bucket = models.ForeignKey(Bucket, on_delete=models.CASCADE)

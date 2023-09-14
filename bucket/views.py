@@ -27,9 +27,9 @@ def mypage(request):
         buckets_list = buckets.filter(user_id=request.user.id)
         bookmarks = Bookmark.objects.all()
         context = {
-            "buckets" : buckets,
+            "buckets": buckets,
             "buckets_list": buckets_list,
-            "bookmarks" : bookmarks,
+            "bookmarks": bookmarks,
         }
         return render(request, "bucket/mypage.html", context)
 
@@ -89,7 +89,7 @@ def profile(request, user_id):
         context = {
             'user': user,
         }
-        return render(request, "bucket/profile.html",context)
+        return render(request, "bucket/profile.html", context)
     elif request.method == "POST":
         user = User.objects.get(id=user_id)
         user.username = request.POST["username"]
@@ -158,14 +158,15 @@ def likes(request, bucket_id):
 
 # 북마크
 @login_required(login_url='/users/login/')
-@csrf_exempt
-def bookmark_create(request, bucket_id):
+def bookmarks(request, bucket_id):
+    bucket = Bucket.objects.get(id=bucket_id)
+
     if request.method == "POST":
-        Bookmark.objects.create(
-            user=request.user,
-            bucket_id=bucket_id
-        )
+        if request.user in bucket.bookmarks.all():
+            bucket.bookmarks.remove(request.user)
+        else:
+            bucket.bookmarks.add(request.user)
+
         return redirect(f'/bucket/{bucket_id}/')
     else:
         return HttpResponse('Invalid request method', status=405)
-
