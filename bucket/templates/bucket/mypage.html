@@ -86,18 +86,23 @@
                 <h2 class="display-5"> Bookmark</h2>
             </div>
             <div class="bg-body-tertiary shadow-sm mx-auto"
-                style="width: 80%; height: 300px; border-radius: 21px 21px 21px 21px;">
+                style="width: 80%; height: auto; border-radius: 21px 21px 21px 21px;">
+                {%if bookmarks%}
                 {% for bookmark in bookmarks %}
-                {% if bookmark.user_id == request.user.id %}
                 {% for bucket in buckets %}
-                {% if bookmark.bucket_id == bucket.id %}
+                {% if bucket == bookmark%}
                 <li>
                     <a href="/bucket/{{ bucket.id }}/">{{ bucket.title }}</a>
                 </li>
                 {% endif %}
                 {% endfor %}
-                {% endif %}
                 {% endfor %}
+                {% else %}
+                <div class="p">
+                    <p>북마크 된 글이</p>
+                    <p>아직 없습니다</p>
+                </div>
+                {% endif %}
             </div>
         </div>
     </div>

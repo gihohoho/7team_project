@@ -25,9 +25,11 @@ def mypage(request):
     if request.method == "GET":
         buckets = Bucket.objects.all()
         buckets_list = buckets.filter(user_id=request.user.id)
+        bookmarks = request.user.bookmark_buckets.all()
         context = {
             "buckets": buckets,
             "buckets_list": buckets_list,
+            "bookmarks": bookmarks,
         }
         return render(request, "bucket/mypage.html", context)
 
