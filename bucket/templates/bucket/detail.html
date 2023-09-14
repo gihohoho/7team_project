@@ -28,7 +28,16 @@
                 <small class="text-muted">| {{ bucket.created_at | date:"Y-m-d h:i" }}</small>
             </p>
             <hr>
-            <p class="card-text" style="padding-bottom:70px;">{{ bucket.content }}</p>
+            <p class="card-text" style="padding-bottom:70px;">
+              <div>
+                {%if bucket.image%}
+                <img src="/media/{{bucket.image}}/" style="width:400px; height:40%; margin: -70px auto 20px auto; ">
+                {% else %}
+                <div></div>
+                {% endif %}
+              </div>
+              {{ bucket.content }}
+            </p>
         </div>
     </div>
     <div class="row mt-3">

@@ -13,11 +13,11 @@ def bucket(request):
     if request.method == "GET":
         buckets = Bucket.objects.all()
         users = User.objects.all()
-        
-        page = request.GET.get("page", 1) 
+
+        page = request.GET.get("page", 1)
         paginator = Paginator(buckets, 6)
         bucket = paginator.get_page(page)
-        
+
         context = {
             "buckets": buckets,
             "users": users,
@@ -33,13 +33,13 @@ def mypage(request):
     if request.method == "GET":
         buckets = Bucket.objects.all()
         buckets_list = buckets.filter(user_id=request.user.id)
-        
-        page = request.GET.get("page", 1) 
+
+        page = request.GET.get("page", 1)
         paginator = Paginator(buckets_list, 6)
         bucket = paginator.get_page(page)
-        
+
         bookmarks = request.user.bookmark_buckets.all()
-        
+
         context = {
             "buckets": buckets,
             "buckets_list": buckets_list,
@@ -72,7 +72,7 @@ def create(request):
         Bucket.objects.create(
             title=request.POST["title"],
             content=request.POST["content"],
-            image = request.FILES.get("image"),
+            image=request.FILES.get("image"),
             user=request.user,
         )
         messages.info(request, 'Bucket 새로 만들기 완료!')
@@ -106,7 +106,11 @@ def update(request, bucket_id):
         'bucket': bucket,
     }
     if request.method == "GET":
-        return render(request, "bucket/update.html", context)
+        if bucket.user == request.user:
+            return render(request, "bucket/update.html", context)
+        else:
+            messages.info(request, '작성자만 가능한 기능입니다')
+            return redirect(f'/bucket/{bucket_id}/')
     elif request.method == "POST":
         if bucket.user == request.user:
             bucket.title = request.POST.get('title')
