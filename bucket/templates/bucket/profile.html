@@ -5,6 +5,13 @@
         <h1 class="jumbotron-heading">Profile 수정 페이지</h1>
     </div>
 </section>
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-info" role="alert">
+    {{ message.message }}
+</div>
+{% endfor %}
+{% endif %}
 <div class="main_profile">
     <div class="left_profile">
         <form action="/bucket/profile_image/{{ user.id }}/" method="post" enctype="multipart/form-data">
@@ -19,8 +26,8 @@
                 {%endif%}
                 <div class="btn">
                     <input class="btn btn-sm btn-outline-secondary" type="file" name="image" style="width:90%" />
-                    <button class="btn btn-sm btn-outline-secondary" type="submit"
-                        onclick="javascript:alert('프로필 사진 저장!')" style="margin-top:10px;">프로필 사진 저장</button>
+                    <button class="btn btn-sm btn-outline-secondary" type="submit" style="margin-top:10px;">프로필 사진
+                        저장</button>
                 </div>
             </div>
         </form>
@@ -43,8 +50,8 @@
                                 style="margin-top:10px;" /></P>
                         <P> Blog : <input type="text" name="blog" value="{{ user.blog | default:'주소를 입력해주세요'}}"
                                 style="margin-top:10px;" /></P>
-                        <button class="btn btn-sm btn-outline-secondary" type="submit"
-                            onclick="javascript:alert('회원정보 수정!')" style="margin-top:20px;">회원정보 수정</button>
+                        <button class="btn btn-sm btn-outline-secondary" type="submit" style="margin-top:20px;">회원정보
+                            수정</button>
                     </div>
                 </form>
             </div>
