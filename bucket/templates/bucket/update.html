@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="create">
-    <div class="update_image">
+    <div class="update_image" style="margin-top: 20px;">
         <form action="/bucket/bucket_image/{{bucket.id}}/" method="post" enctype="multipart/form-data">
             {%if bucket.image%}
-            <img src="/media/{{bucket.image}}">
+            <img src="/media/{{bucket.image}}" style="max-width: 100%;">
             {%else%}
             <img class="image"
                 src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR69NqHZ5iSU6hstqlhMGcigGhmdmDTBalgpg&usqp=CAU">
