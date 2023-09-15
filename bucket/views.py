@@ -39,7 +39,8 @@ def mypage(request):
         bucket = paginator.get_page(page)
 
         bookmarks = request.user.bookmark_buckets.all()
-
+        if request.user.blog and not request.user.blog.startswith('http'):
+            request.user.blog = 'http://' + request.user.blog
         context = {
             "buckets": buckets,
             "buckets_list": buckets_list,
@@ -55,6 +56,8 @@ def userbucket(request, user_id):
     if request.method == "GET":
         user = get_object_or_404(User, id=user_id)
         buckets_list = Bucket.objects.filter(user=user)
+        if user.blog and not user.blog.startswith('http'):
+            user.blog = 'http://' + user.blog
         context = {
             'user': user,
             "buckets_list": buckets_list,

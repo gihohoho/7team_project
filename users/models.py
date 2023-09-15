@@ -62,7 +62,7 @@ class User(AbstractBaseUser):
     is_admin = models.BooleanField(default=False)
     mbti = models.CharField(max_length=4, null=True, blank=True)
     tmi = models.TextField(null=True, blank=True)
-    blog = models.EmailField(unique=True, null=True, blank=True)
+    blog = models.TextField(unique=True, null=True, blank=True)
     image = models.ImageField(upload_to='profile_images/', blank=True, null=True)
 
     objects = MyUserManager()
