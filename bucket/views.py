@@ -6,15 +6,22 @@ from bucket.models import Bucket, Comment
 from users.models import User
 from django.db import models  # updated_at 설정을 위한 models import
 from django.contrib import messages
+from django.core.paginator import Paginator
 
 # 메인페이지
 def bucket(request):
     if request.method == "GET":
         buckets = Bucket.objects.all()
         users = User.objects.all()
+
+        page = request.GET.get("page", 1)
+        paginator = Paginator(buckets, 6)
+        bucket = paginator.get_page(page)
+
         context = {
             "buckets": buckets,
             "users": users,
+            "page": bucket,
         }
         return render(request, "bucket/bucket.html", context)
 
@@ -26,6 +33,11 @@ def mypage(request):
     if request.method == "GET":
         buckets = Bucket.objects.all()
         buckets_list = buckets.filter(user_id=request.user.id)
+
+        page = request.GET.get("page", 1)
+        paginator = Paginator(buckets_list, 6)
+        bucket = paginator.get_page(page)
+
         bookmarks = request.user.bookmark_buckets.all()
         if request.user.blog and not request.user.blog.startswith('http'):
             request.user.blog = 'http://' + request.user.blog
@@ -33,6 +45,7 @@ def mypage(request):
             "buckets": buckets,
             "buckets_list": buckets_list,
             "bookmarks": bookmarks,
+            "page": bucket,
         }
         return render(request, "bucket/mypage.html", context)
 
@@ -62,10 +75,29 @@ def create(request):
         Bucket.objects.create(
             title=request.POST["title"],
             content=request.POST["content"],
+            image=request.FILES.get("image"),
             user=request.user,
         )
         messages.info(request, 'Bucket 새로 만들기 완료!')
         return redirect("/bucket/mypage/")
+
+
+# 게시글 사진 수정
+@login_required(login_url='/users/login/')
+@csrf_exempt
+def update_image(request, bucket_id):
+    if request.method == "GET":
+        bucket = Bucket.objects.get(id=bucket_id)
+        context = {
+            'bucket': bucket,
+        }
+        return render(request, f'/bucket/{bucket_id}/', context)
+    elif request.method == "POST":
+        bucket = Bucket.objects.get(id=bucket_id)
+        bucket.image = request.FILES.get("image")
+        bucket.save()
+        messages.info(request, '사진 수정 완료!')
+        return redirect(f'/bucket/{bucket_id}/')
 
 
 # 게시글 수정
@@ -77,23 +109,26 @@ def update(request, bucket_id):
         'bucket': bucket,
     }
     if request.method == "GET":
-        return render(request, "bucket/update.html", context)
+        if bucket.user == request.user:
+            return render(request, "bucket/update.html", context)
+        else:
+            messages.info(request, '작성자만 가능한 기능입니다')
+            return redirect(f'/bucket/{bucket_id}/')
     elif request.method == "POST":
         if bucket.user == request.user:
             bucket.title = request.POST.get('title')
             bucket.content = request.POST.get('content')
             bucket.updated_at = models.DateTimeField(auto_now=True)
+            bucket.image = request.FILES.get("image")
             bucket.save()
             messages.info(request, 'Bucket 수정 완료!')
-            return redirect(f'/bucket/')
+            return redirect(f'/bucket/{bucket_id}/')
         else:
             messages.info(request, '작성자만 가능한 기능입니다')
             return redirect(f'/bucket/{bucket_id}/')
 
 
 # 게시글 삭제
-
-
 @login_required(login_url='/users/login/')
 @csrf_exempt
 def bdelete(request, bucket_id):
