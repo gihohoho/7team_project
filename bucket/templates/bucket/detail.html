@@ -76,7 +76,11 @@
     <div class="be-like-block">
       <form action="/bucket/likes/{{bucket.id}}/" method="post">
         {% csrf_token %}
+        {% if user in bucket.like_users.all %}
         <button class="like-button" type="submit">❤️</button>
+        {% else %}
+        <button class="like-button" type="submit">🤍</button>
+        {% endif %}
         <span class="small">
           {{ bucket.like_users.count }} 명이 이 글을 좋아합니다.
         </span>
