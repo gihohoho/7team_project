@@ -69,7 +69,11 @@
       <div style="float: right">
         <form action="/bucket/bookmarks/{{bucket.id}}/" method="post">
           {% csrf_token %}
-          <button class="like-button" type="submit">북마크</button>
+          {% if user in bucket.bookmarks.all %}
+          <button class="like-button" type="submit">⭐</button>
+          {% else %}
+          <button class="like-button" type="submit">🌟</button>
+          {% endif %}
         </form>
       </div>
     </div>
